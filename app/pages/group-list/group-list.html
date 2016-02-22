@@ -1,0 +1,46 @@
+<ion-navbar *navbar>
+    <button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Your Groups</ion-title>
+</ion-navbar>
+
+<ion-content>
+    <ion-refresher (start)="doStart($event)" (refresh)="doRefresh($event)" (pulling)="doPulling($event)">
+    </ion-refresher>
+
+    <ion-card *ngFor="#group of groups">
+        <ion-card-header>
+            {{group.name}}
+        </ion-card-header>
+        <ion-card-content>
+            <div class="desc" *ngIf="group.userOwned==0"> You do not owe anything </div>
+            <div class="desc" *ngIf="group.userOwned<0"> You are owed <strong class="">{{-group.userOwned | currency:'USD':true:'2.2-2'}}</strong> </div>
+            <div class="desc" *ngIf="group.userOwned>0"> You owe <strong class="">{{group.userOwned | currency:'USD':true:'2.2-2'}}</strong> </div>
+        </ion-card-content>
+        <ion-item>
+            <ion-note item-left>
+                <ion-icon name="people"></ion-icon>
+                {{group.users.length}} Members
+            </ion-note>
+
+            <button primary clear item-right (click)="chooseGroup($event, group)">
+                <ion-icon name="text"></ion-icon>
+                <div>View Detail</div>
+            </button>
+        </ion-item>
+    </ion-card>
+
+    <!--<ion-list>
+        <button ion-item *ngFor="#item of items" (click)="itemTapped($event, item)">
+            <ion-icon name="{{item.icon}}" item-left></ion-icon>
+            {{item.title}}
+            <div class="item-note" item-right>
+                {{item.note}}
+            </div>
+        </button>
+    </ion-list>
+    <div *ngIf="selectedItem" padding>
+        You navigated here from <b>{{selectedItem.title}}</b>
+    </div>-->
+</ion-content>

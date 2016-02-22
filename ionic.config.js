@@ -3,7 +3,7 @@ module.exports = {
 
   paths: {
     html : {
-      src: ['app/**/*.html'],
+      src: ['app/**/*.html','app/*/*.png','app/*/*.jpg'],
       dest: "www/build"
     },
     sass: {
@@ -20,7 +20,7 @@ module.exports = {
     },
     watch: {
       sass: ['app/**/*.scss'],
-      html: ['app/**/*.html'],
+      html: ['app/**/*.html','app/*/*.png','app/*/*.jpg'],
       livereload: [
         'www/build/**/*.html',
         'www/build/**/*.js',
