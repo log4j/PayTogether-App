@@ -1,0 +1,31 @@
+
+<ion-navbar *navbar>
+  <!--<button menuToggle>
+    <ion-icon name="menu"></ion-icon>
+  </button>-->
+  <ion-title>Pay Together</ion-title>
+</ion-navbar>
+
+
+<ion-content padding class="getting-started">
+
+  <h3>Welcome to your first Ionic app!</h3>
+
+  <ion-list>
+
+  <ion-item>
+    <ion-label floating>Username</ion-label>
+    <ion-input type="text" [(ngModel)]="loginData.username"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label floating>Password</ion-label>
+    <ion-input type="password" [(ngModel)]="loginData.password"></ion-input>
+  </ion-item>
+
+
+<button danger round full (click)="submitLogin()">Login</button>
+
+</ion-list>
+
+</ion-content>
