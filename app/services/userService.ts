@@ -47,7 +47,7 @@ export class UserService {
     }
     
     getGroupDetail(groupId) {
-        return this._http.get('group/'+groupId);        
+        return this._http.get('group/'+groupId,null);        
     }
     
     getActivityList(groupId) {
