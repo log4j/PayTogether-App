@@ -21,7 +21,10 @@
                 <ion-icon name="people"></ion-icon>
                 {{group.users.length}} Members
             </ion-note>
-
+            <button primary clear item-right (click)="showGroupEditModal()">
+                <ion-icon name="text"></ion-icon>
+                <div>Edit</div>
+            </button>
         </ion-item>
     </ion-card>
 
@@ -54,9 +57,9 @@
             Activities
         </ion-list-header>
         <ion-item *ngFor="#activity of activities">
-            <ion-icon name="leaf" item-left></ion-icon>
-            Herbology
-            <ion-icon name="rose" item-right></ion-icon>
+            <ion-icon name="{{activity.is_pay?'cart':'pricetags'}}" item-left></ion-icon>
+                {{activity.from.displayName}} paid for {{activity.name }}
+            <ion-note  item-right>{{activity.amount | currency:'USD':'2.2-2'}}</ion-note>
         </ion-item>
 
     </ion-list>
