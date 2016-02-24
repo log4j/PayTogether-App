@@ -41,9 +41,12 @@ export class UserService {
         this._localStorage.setObject('profile', data);
     }
 
-    getGroups() {
+    getGroups()  {
         this.profile = this._localStorage.getObject('profile');
-        return this._http.get('group', { user: this.profile._id });
+        return this._http.get('group', { user: this.profile._id })
+        .map(res =>{
+            return res.data;
+        });
     }
     
     getGroupDetail(groupId) {

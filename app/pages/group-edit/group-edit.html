@@ -29,6 +29,11 @@
             Members
         </ion-list-header>
 
+        <ion-item>
+            <button fill primary full (click)="promptForName()">
+                Add new Member
+            </button>
+        </ion-item>
         <ion-item *ngFor="#user of group.users">
             <ion-avatar item-left>
                 <img src="img/default.png">

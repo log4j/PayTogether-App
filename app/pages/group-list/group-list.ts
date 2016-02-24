@@ -19,7 +19,9 @@ export class GroupListPage {
         _userService.getGroups()
             .subscribe(
             data => {
-                this.groups = data.data;
+                console.log('from getGroups',data);
+                //this.groups = data.data;
+                this.groups = data;
             })
         
         

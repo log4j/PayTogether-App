@@ -2,6 +2,8 @@ import {Injectable} from 'angular2/core';
 import {Config} from '../services/Config';
 import {Http, Headers, Response} from 'angular2/http';
 import 'rxjs/Rx';
+import {Observable} from 'rxjs/Observable';
+
 
 @Injectable()
 /**
@@ -19,7 +21,7 @@ export class JsonHttp {
     /**
      * send post request
      */
-    post(url: string, requestBody: any) {
+    post(url: string, requestBody: any):Observable<Result> {
         let body = JSON.stringify(requestBody);
         return this._http.post(this.host + url, body, {
             headers: this.headers
@@ -29,7 +31,7 @@ export class JsonHttp {
     /**
      * send Get request, requestParams will be attach in Uri
      */
-    get(url: string, requestParams: any) {
+    get(url: string, requestParams: any):Observable<Result> {
         let params: string = this.stringyParams(requestParams);
         return this._http.get(this.host + url + params, {
             headers: this.headers
@@ -39,7 +41,7 @@ export class JsonHttp {
     /**
      * send Put request
      */
-    put(url: string, requestBody: any) {
+    put(url: string, requestBody: any) :Observable<Result>{
         let body = JSON.stringify(requestBody);
         return this._http.put(this.host + url, body, {
             headers: this.headers
@@ -49,7 +51,7 @@ export class JsonHttp {
     /**
      * send Delete request, requestParams will be attach in Uri
      */
-    delete(url: string, requestParams: any) {
+    delete(url: string, requestParams: any):Observable<Result> {
         let paramsString = this.stringyParams(requestParams);
         return this._http.delete(this.host + url + paramsString, {
             headers: this.headers
