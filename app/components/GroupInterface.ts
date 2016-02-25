@@ -75,8 +75,6 @@ export class Group implements IGroup{
     
     addMember(user: User):boolean{
         
-        console.log(user);
-        
         //check whether this name already exist;
         for(let i=0;i<this.users.length;i++){
             
