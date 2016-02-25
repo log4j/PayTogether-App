@@ -1,8 +1,10 @@
 import {Injectable} from 'angular2/core';
 import {JsonHttp} from '../utils/JsonHttp';
-
+import {Observable} from 'rxjs/Observable';
 import {LocalStorage} from 'angular2-local-storage/local_storage';
 
+import {User} from '../components/GroupInterface'
+import {Result} from '../components/HttpResult'
 
 @Injectable()
 export class UserService {
@@ -58,5 +60,22 @@ export class UserService {
             group:groupId
         });
     }
+    
+    getUserByUsernameOrEmail(username:string) :Observable<User> {
+        return this._http.get('user',{
+            usernameOrEmail:username
+        }).map(
+            res=>{
+                
+                if(res.result && res.data.length)
+                    return new User(res.data[0]);
+                    
+                else{
+                    return null;
+                }
+            }
+        )
+    }
+    
 }
 

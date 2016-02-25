@@ -3,6 +3,8 @@ import {forwardRef} from 'angular2/core';
 import {NgFor} from 'angular2/common';
 // import * as helpers from '../../../directives/helpers';
 import {Group} from '../../components/GroupInterface';
+import {User} from '../../components/GroupInterface';
+import {UserService} from '../../services/UserService'
 
 @Page({
     templateUrl: './build/pages/group-edit/group-edit.html',
@@ -21,7 +23,8 @@ export class GroupEditModalPage {
         platform: Platform,
         params: NavParams,
         viewCtrl: ViewController,
-        private nav: NavController
+        private nav: NavController,
+        private _userService: UserService
     ) {
         this.viewCtrl = viewCtrl;
         this.params = params;
@@ -64,6 +67,26 @@ export class GroupEditModalPage {
                 {
                     text: 'Save',
                     handler: data => {
+                        this._userService.getUserByUsernameOrEmail(data.Name)
+                        .subscribe(
+                            res =>{
+                                let result = false;
+                                if(res!=null){
+                                    result = this.group.addMember(res);
+                                }else{
+                                    result = this.group.addMember(new User(data.Name));
+                                }
+                                if(!result){
+                                    // let alert = Alert.create({
+                                    //     title: 'Add Failed',
+                                    //     subTitle: 'Member already in list!',
+                                    //     buttons: ['Ok']
+                                    // });
+                                    // this.nav.present(alert);
+                                }
+                            }
+                        )
+                        
                     }
                 }
             ]

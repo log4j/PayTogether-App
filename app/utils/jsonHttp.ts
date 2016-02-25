@@ -3,7 +3,7 @@ import {Config} from '../services/Config';
 import {Http, Headers, Response} from 'angular2/http';
 import 'rxjs/Rx';
 import {Observable} from 'rxjs/Observable';
-
+import {Result} from '../components/HttpResult'
 
 @Injectable()
 /**

@@ -35,7 +35,7 @@ export class AccountPage {
 
                     this._userService.updateProfile(data.data);
 
-                    this.nav.setRoot(GroupListPage, { userId: data.id });
+                    this.nav.setRoot(GroupListPage, { userId: data.data._id });
                 } else {
                     let alert = Alert.create({
                         title: 'Login Failed',
