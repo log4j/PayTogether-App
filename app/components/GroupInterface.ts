@@ -73,7 +73,7 @@ export class Group implements IGroup{
         
     }
     
-    addMember(user: User):boolean{
+    addMember(user: User):boolean {
         
         //check whether this name already exist;
         for(let i=0;i<this.users.length;i++){
@@ -81,19 +81,21 @@ export class Group implements IGroup{
             if(user._id && user._id == this.users[i]._id){
                 return false;
             }
-            
             if(user.displayName == this.users[i].displayName){
                 return false;
             }
         }
-        
         this.users.push(user);
-        
         return true;
-        
-        
     }
-    
+
+    removeMember(index: number):boolean {
+        if(index>=0 && index<this.users.length){
+            this.users.splice(index,1);
+            return true;
+        }
+        return false;
+    }    
     // return new Observable<Result>(
     //                 observer => {
     //                     let result:Result;

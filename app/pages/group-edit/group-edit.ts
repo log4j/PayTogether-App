@@ -46,6 +46,12 @@ export class GroupEditModalPage {
     dismiss() {
         this.viewCtrl.dismiss();
     }
+    
+    removeMember(user:User,index:number){
+        
+        console.log(user,index);
+        this.group.removeMember(index);
+    }
 
 
     promptForName() {
