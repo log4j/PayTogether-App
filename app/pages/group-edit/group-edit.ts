@@ -1,4 +1,4 @@
-import {App, Alert, IonicApp, Animation, Modal, Platform, NavController, NavParams, Page, Events, ViewController} from 'ionic-framework/ionic';
+import {App, Alert, IonicApp, Animation, Modal, Platform, NavController, NavParams, Page, Events, ViewController} from 'ionic-angular';
 import {forwardRef} from 'angular2/core';
 import {NgFor} from 'angular2/common';
 // import * as helpers from '../../../directives/helpers';
@@ -18,16 +18,18 @@ export class GroupEditModalPage {
     currentPlatform: string;
     character: any;
     group: Group;
+    _userService: UserService;
 
     constructor(
         platform: Platform,
         params: NavParams,
         viewCtrl: ViewController,
         private nav: NavController,
-        private _userService: UserService
+        _userService: UserService
     ) {
         this.viewCtrl = viewCtrl;
         this.params = params;
+        this._userService = _userService;
         if (platform.is('android')) {
             this.currentPlatform = 'android';
         } else {
@@ -35,9 +37,10 @@ export class GroupEditModalPage {
         }
 
         // this.group = params.get('group');
-        // console.log(this.group);
+        console.log('user in Group edit want to fecth from _userService',_userService.user);
         
         this.group = new Group();
+        this.group.addMember(_userService.user);
         
         this.group.name = 'hahaha';
         

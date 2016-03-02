@@ -1,5 +1,5 @@
 import {Component} from 'angular2/core';
-import {Page, Alert, NavController} from 'ionic-framework/ionic';
+import {Page, Alert, NavController} from 'ionic-angular';
 import {UserService} from '../../services/UserService'
 import {BusyCtrl} from '../../components/busy-component/busy-component';
 import {GroupListPage} from '../group-list/group-list';
@@ -7,14 +7,20 @@ import {GroupListPage} from '../group-list/group-list';
 
 
 @Page({
-    templateUrl: 'build/pages/account/account.html',
-    providers: [UserService]
+    templateUrl: 'build/pages/account/account.html'
+    // providers: [UserService]
 })
 export class AccountPage {
     loginData: any;
     selectedItem: any;
-
-    constructor(private _userService: UserService, private nav: NavController, private busyCtrl: BusyCtrl) {
+    _userService: UserService;
+    
+    constructor( _userService: UserService, 
+    private nav: NavController, 
+    private busyCtrl: BusyCtrl) {
+        
+        console.log('in account page');
+        this._userService = _userService;
         this.loginData =
             {
                 username: 'yangmang',

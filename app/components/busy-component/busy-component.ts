@@ -1,7 +1,7 @@
 import {Injectable, Component, Input, EventEmitter} from 'angular2/core';
 import {Subject} from 'rxjs/Subject';
 
-import {IONIC_DIRECTIVES} from 'ionic-framework/ionic';
+import {IONIC_DIRECTIVES} from 'ionic-angular';
 
 @Injectable()
 export class BusyCtrl {

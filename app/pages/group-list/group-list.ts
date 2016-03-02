@@ -1,4 +1,4 @@
-import {Page, NavController, NavParams} from 'ionic-framework/ionic';
+import {Page, NavController, NavParams} from 'ionic-angular';
 
 import {UserService} from '../../services/UserService'
 import {GroupDetailPage} from '../group-detail/group-detail'
@@ -11,18 +11,22 @@ export class GroupListPage {
     icons: string[];
     items: Array<{ title: string, note: string, icon: string }>;
     groups: Array<any>;
+    
 
-    constructor(private nav: NavController, navParams: NavParams, _userService: UserService) {
+    constructor(private nav: NavController, 
+    navParams: NavParams, 
+    _userService: UserService) {
         
         
         //try to get group list
         _userService.getGroups()
             .subscribe(
             data => {
-                console.log('from getGroups',data);
+                // console.log('from getGroups',data);
                 //this.groups = data.data;
                 this.groups = data;
             })
+        
         
         
         // If we navigated to this page, we will have an item available as a nav param

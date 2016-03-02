@@ -1,8 +1,8 @@
-import {App, IonicApp, Platform} from 'ionic-framework/ionic';
+import {App, IonicApp, Platform} from 'ionic-angular';
 import {Injectable, OnDestroy} from 'angular2/core';
-import {Config} from './services/Config'
-import {JsonHttp} from './utils/JsonHttp'
-import {UserService} from './services/UserService'
+import {Config} from './services/Config';
+import {JsonHttp} from './utils/JsonHttp';
+import {UserService} from './services/UserService';
 
 
 import {AccountPage} from './pages/account/account';
@@ -28,11 +28,15 @@ class MyApp {
     // make HelloIonicPage the root (or first) page
     rootPage: Type = AccountPage;
     pages: Array<{ title: string, component: Type }>;
+    _userService: UserService;
 
-    constructor(private app: IonicApp, private platform: Platform) {
+    constructor(private app: IonicApp, private platform: Platform, _userService:UserService) {
 
+        this._userService = _userService;
 
         this.initializeApp();
+        
+        
 
         // set our app's pages
         this.pages = [

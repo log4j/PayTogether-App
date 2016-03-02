@@ -40,6 +40,8 @@ export class User implements IUser{
             if(data.email)
                 this.email = data.email;
                 
+            
+                
             if(data.invisible)
                 this.invisible = data.invisible;
         }

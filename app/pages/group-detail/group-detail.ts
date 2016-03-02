@@ -1,4 +1,4 @@
-import {Platform, Page, Modal, NavController, NavParams, ActionSheet} from 'ionic-framework/ionic';
+import {Platform, Page, Modal, NavController, NavParams, ActionSheet} from 'ionic-angular';
 import {UserService} from '../../services/UserService'
 
 import {GroupEditModalPage} from '../group-edit/group-edit'
@@ -14,11 +14,13 @@ export class GroupDetailPage {
     stats: any;
     groupReady: boolean = false;
     activitiesRead: boolean = false;
+    _userService: UserService;
 
     constructor(public platform: Platform, private nav: NavController, navParams: NavParams,
-        private _userService: UserService) {
+        _userService: UserService) {
         // If we navigated to this page, we will have an item available as a nav param
         this.group = navParams.get('item');
+        this._userService = _userService;
         console.log('from params', this.group);
         _userService.getGroupDetail(this.group._id)
             .subscribe(

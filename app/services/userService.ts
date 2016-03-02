@@ -10,11 +10,12 @@ import {Result} from '../components/HttpResult'
 export class UserService {
 
     userId: string;
+    user: User;
     profile: any;
 
     constructor(private _http: JsonHttp, private _localStorage: LocalStorage) {
 
-
+        console.log('create user service');
     }
 
     postLogin(username: string, password: string) {
@@ -23,7 +24,20 @@ export class UserService {
         return this._http.post('login', {
             username: username,
             password: password
-        });
+        }).map(
+            res =>{
+                
+                if(res.result){
+                    console.log(res.data);
+                    this.userId = res.data._id;
+                    this.user = new User(res.data);
+                    
+                    console.log('user in userService',this.user);
+                }
+                
+                return res;
+            }
+            );
           
         // n this._http.get('group',{
         //     user: '56b14506d046d8d202d06e51'
