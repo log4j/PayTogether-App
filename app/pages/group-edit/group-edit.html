@@ -19,10 +19,12 @@
     </button> -->
 
     <ion-list>
+        <form novalidate #form="ngForm" (ngSubmit)="onSubmitGroupInfo(form)">
 
-        <ion-item>
-            <ion-label floating>Group Name</ion-label>
-            <ion-input type="text" [(ngModel)]="group.name"></ion-input>
+        <ion-item [ngClass]="{'has-error':name.touched&&!(name.valid)}">
+            <ion-label floating >Group Name </ion-label>
+            <ion-input type="text" [(ngModel)]="group.name" required 
+                ngControl="name" #name="ngForm"></ion-input>
         </ion-item>
 
         <ion-list-header>
@@ -34,22 +36,24 @@
                 Add new Member
             </button>
         </ion-item>
-        <ion-item *ngFor="#user of group.users, #i = index">
+        <ion-item *ngFor="#member of group.users, #i = index">
             <ion-avatar item-left>
                 <img src="img/default.png">
             </ion-avatar>
-            <h2>{{user.displayName}}</h2>
-            <p *ngIf="user.invisible">anonymous user</p>
-            <p *ngIf="!user.invisible">{{user.email}}</p>
-            <button outline item-right (click)="removeMember(user,i)">
+            <h2>{{member.displayName}}</h2>
+            <p *ngIf="member.invisible">anonymous user</p>
+            <p *ngIf="!member.invisible">{{member.email}}</p>
+            <button outline item-right
+            [hidden]="member._id==user._id"
+            (click)="removeMember(member,i)">
                 Remove
             </button>
         </ion-item>
 
-        <button secondary round full>Save</button>
+        <button secondary round full type="submit">Save</button>
 
 
-
+        </form>
     </ion-list>
 
 </ion-content>

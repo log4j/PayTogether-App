@@ -1,5 +1,7 @@
 import {App, IonicApp, Platform} from 'ionic-angular';
 import {Injectable, OnDestroy} from 'angular2/core';
+
+import {NgClass} from 'angular2/common';
 import {Config} from './services/Config';
 import {JsonHttp} from './utils/JsonHttp';
 import {UserService} from './services/UserService';
@@ -22,7 +24,7 @@ import {LocalStorage} from 'angular2-local-storage/local_storage';
     templateUrl: 'build/app.html',
     config: {}, // http://ionicframework.com/docs/v2/api/config/Config/,
     providers: [Config, JsonHttp, UserService, BusyCtrl, LocalStorage],
-    directives: [BusyComponent]
+    directives: [BusyComponent,NgClass]
 })
 class MyApp {
     // make HelloIonicPage the root (or first) page

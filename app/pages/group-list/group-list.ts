@@ -1,7 +1,10 @@
-import {Page, NavController, NavParams} from 'ionic-angular';
+import {Page, Modal, NavController, NavParams} from 'ionic-angular';
 
 import {UserService} from '../../services/UserService'
 import {GroupDetailPage} from '../group-detail/group-detail'
+
+import {GroupEditModalPage} from '../group-edit/group-edit'
+
 
 @Page({
     templateUrl: 'build/pages/group-list/group-list.html'
@@ -72,5 +75,10 @@ export class GroupListPage {
 
     doPulling(refresher) {
         console.log('Pulling', refresher);
+    }
+    
+    showGroupNewModal() {
+        let myModal = Modal.create(GroupEditModalPage,{});
+        this.nav.present(myModal);
     }
 }

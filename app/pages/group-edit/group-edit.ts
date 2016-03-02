@@ -1,6 +1,6 @@
 import {App, Alert, IonicApp, Animation, Modal, Platform, NavController, NavParams, Page, Events, ViewController} from 'ionic-angular';
 import {forwardRef} from 'angular2/core';
-import {NgFor} from 'angular2/common';
+import {NgFor,NgClass} from 'angular2/common';
 // import * as helpers from '../../../directives/helpers';
 import {Group} from '../../components/GroupInterface';
 import {User} from '../../components/GroupInterface';
@@ -8,7 +8,7 @@ import {UserService} from '../../services/UserService'
 
 @Page({
     templateUrl: './build/pages/group-edit/group-edit.html',
-    directives: [NgFor]
+    directives: [NgFor,NgClass]
 
 })
 export class GroupEditModalPage {
@@ -19,6 +19,7 @@ export class GroupEditModalPage {
     character: any;
     group: Group;
     _userService: UserService;
+    user: User;
 
     constructor(
         platform: Platform,
@@ -41,8 +42,8 @@ export class GroupEditModalPage {
         
         this.group = new Group();
         this.group.addMember(_userService.user);
-        
-        this.group.name = 'hahaha';
+        this.user = _userService.user;
+        this.group.name = '';
         
     }
 
@@ -101,5 +102,13 @@ export class GroupEditModalPage {
             ]
         });
         this.nav.present(prompt);
+    }
+    
+    onSubmitGroupInfo(form){
+        if(form.valid){
+            //submit
+            console.log(form);
+        }
+        
     }
 }
