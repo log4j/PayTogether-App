@@ -32,13 +32,13 @@
         <ion-list-header>
             Members
         </ion-list-header>
-        <ion-item-sliding *ngFor="#user of users">
+        <ion-item-sliding *ngFor="#user of group.users">
             <ion-item (click)="presentActionSheet($event,user)">
                 <ion-avatar item-left>
                     <img src="img/default.png">
                 </ion-avatar>
                 <h2>{{user.displayName}}</h2>
-                <p>Spent:$12.23</p>
+                <p>Spent: {{user.totalSpent | currency:'USD':true:'2.2-2'}}</p>
             </ion-item>
             <ion-item-options>
                 <button primary>
@@ -56,8 +56,8 @@
         <ion-list-header>
             Activities
         </ion-list-header>
-        <ion-item *ngFor="#activity of activities">
-            <ion-icon name="{{activity.is_pay?'cart':'pricetags'}}" item-left></ion-icon>
+        <ion-item *ngFor="#activity of group.activities">
+            <ion-icon name="{{activity.isPay?'cart':'pricetags'}}" item-left></ion-icon>
                 {{activity.from.displayName}} paid for {{activity.name }}
             <ion-note  item-right>{{activity.amount | currency:'USD':'2.2-2'}}</ion-note>
         </ion-item>

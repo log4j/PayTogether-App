@@ -3,7 +3,7 @@ import {JsonHttp} from '../utils/JsonHttp';
 import {Observable} from 'rxjs/Observable';
 import {LocalStorage} from 'angular2-local-storage/local_storage';
 
-import {User} from '../components/GroupInterface'
+import {User,Group} from '../components/GroupInterface'
 import {Result} from '../components/HttpResult'
 
 @Injectable()
@@ -14,27 +14,18 @@ export class UserService {
     profile: any;
 
     constructor(private _http: JsonHttp, private _localStorage: LocalStorage) {
-
-        console.log('create user service');
     }
 
     postLogin(username: string, password: string) {
-        //   console.log(data,this.host);
-      
         return this._http.post('login', {
             username: username,
             password: password
         }).map(
             res =>{
-                
                 if(res.result){
-                    console.log(res.data);
                     this.userId = res.data._id;
                     this.user = new User(res.data);
-                    
-                    console.log('user in userService',this.user);
                 }
-                
                 return res;
             }
             );
@@ -57,16 +48,36 @@ export class UserService {
         this._localStorage.setObject('profile', data);
     }
 
-    getGroups()  {
+    getGroups() : Observable<Array<Group>>{
         this.profile = this._localStorage.getObject('profile');
         return this._http.get('group', { user: this.profile._id })
         .map(res =>{
-            return res.data;
+            let groups:Array<Group> = [];
+            if(res.result){
+                for (let i=0;i<res.data.length;i++)
+                    groups.push(new Group(res.data[i]));
+            }
+            return groups;
         });
     }
     
     getGroupDetail(groupId) {
         return this._http.get('group/'+groupId,null);        
+    }
+    
+    /**
+     * if group._id is null 
+     *  do CREATE
+     * else
+     *  do UPDATE
+     */
+    updateGroup(group:Group) : Observable<Result> {
+        let postData = group.toObject();
+        if(postData._id){
+            return this._http.put('group/'+postData._id, postData);
+        }else{
+            return this._http.post('group', postData);
+        }
     }
     
     getActivityList(groupId) {

@@ -42,6 +42,7 @@ export class GroupEditModalPage {
         
         this.group = new Group();
         this.group.addMember(_userService.user);
+        this.group.creator = _userService.user;
         this.user = _userService.user;
         this.group.name = '';
         
@@ -52,8 +53,6 @@ export class GroupEditModalPage {
     }
     
     removeMember(user:User,index:number){
-        
-        console.log(user,index);
         this.group.removeMember(index);
     }
 
@@ -84,7 +83,7 @@ export class GroupEditModalPage {
                                 if(res!=null){
                                     result = this.group.addMember(res);
                                 }else{
-                                    result = this.group.addMember(new User(data.Name));
+                                    result = this.group.addMember( User.createUserByDisplayName(data.Name));
                                 }
                                 if(!result){
                                     // let alert = Alert.create({
@@ -108,6 +107,20 @@ export class GroupEditModalPage {
         if(form.valid){
             //submit
             console.log(form);
+            
+            this._userService.updateGroup(this.group)
+            .subscribe(
+                res => {
+                    console.log(res);
+                    if(res.result){
+                        //submit,
+                        this.viewCtrl.dismiss(new Group(res.data));
+                    }else{
+                        //show alert
+                    }
+                }
+            )
+            
         }
         
     }

@@ -19,28 +19,23 @@ export class AccountPage {
     private nav: NavController, 
     private busyCtrl: BusyCtrl) {
         
-        console.log('in account page');
         this._userService = _userService;
         this.loginData =
             {
-                username: 'yangmang',
+                username: 'test@test.com',
                 password: '123'
             }
     }
 
     submitLogin(event) {
-        console.log('try to login', event, this.loginData);
 
         this.busyCtrl.next(true);
 
         this._userService.postLogin(this.loginData.username, this.loginData.password)
             .subscribe(
             data => {
-                console.log(data)
                 if (data.result) {
-
                     this._userService.updateProfile(data.data);
-
                     this.nav.setRoot(GroupListPage, { userId: data.data._id });
                 } else {
                     let alert = Alert.create({

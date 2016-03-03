@@ -4,7 +4,7 @@ import {UserService} from '../../services/UserService'
 import {GroupDetailPage} from '../group-detail/group-detail'
 
 import {GroupEditModalPage} from '../group-edit/group-edit'
-
+import {Group,User} from '../../components/GroupInterface';
 
 @Page({
     templateUrl: 'build/pages/group-list/group-list.html'
@@ -13,7 +13,7 @@ export class GroupListPage {
     selectedItem: any;
     icons: string[];
     items: Array<{ title: string, note: string, icon: string }>;
-    groups: Array<any>;
+    groups: Array<Group>;
     
 
     constructor(private nav: NavController, 
@@ -28,9 +28,11 @@ export class GroupListPage {
                 // console.log('from getGroups',data);
                 //this.groups = data.data;
                 this.groups = data;
+                // for(let i=0;i<data.length;i++){
+                //     this.groups.push(data[i]);
+                // }
+                console.log(data);
             })
-        
-        
         
         // If we navigated to this page, we will have an item available as a nav param
         this.selectedItem = navParams.get('item');
@@ -54,31 +56,36 @@ export class GroupListPage {
         });
     }
     
-    chooseGroup(event, item) {
+    chooseGroup(event, group) {
         this.nav.push(GroupDetailPage, {
-            item: item
+            group: group
         })
     }
 
     doRefresh(refresher) {
-        console.log('Doing Refresh', refresher)
+        // console.log('Doing Refresh', refresher)
 
         setTimeout(() => {
             refresher.complete();
-            console.log("Complete");
+            // console.log("Complete");
         }, 5000);
     }
 
     doStart(refresher) {
-        console.log('Doing Start', refresher);
+        // console.log('Doing Start', refresher);
     }
 
     doPulling(refresher) {
-        console.log('Pulling', refresher);
+        // console.log('Pulling', refresher);
     }
     
     showGroupNewModal() {
         let myModal = Modal.create(GroupEditModalPage,{});
+        myModal.onDismiss((data:Group)=>{
+            if(data){
+                this.groups.push(data);
+            }
+        });
         this.nav.present(myModal);
     }
 }
