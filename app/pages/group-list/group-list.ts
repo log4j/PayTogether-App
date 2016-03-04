@@ -1,4 +1,4 @@
-import {Page, Modal, NavController, NavParams} from 'ionic-angular';
+import {IonicApp, Page, Modal, NavController, NavParams} from 'ionic-angular';
 
 import {UserService} from '../../services/UserService'
 import {GroupDetailPage} from '../group-detail/group-detail'
@@ -18,6 +18,7 @@ export class GroupListPage {
 
     constructor(private nav: NavController, 
     navParams: NavParams, 
+    private app:IonicApp,
     _userService: UserService) {
         
         
@@ -83,7 +84,8 @@ export class GroupListPage {
         let myModal = Modal.create(GroupEditModalPage,{});
         myModal.onDismiss((data:Group)=>{
             if(data){
-                this.groups.push(data);
+                this.groups.unshift(data);
+                this.app.getComponent('group-list').scrollTo(0,0,400);
             }
         });
         this.nav.present(myModal);

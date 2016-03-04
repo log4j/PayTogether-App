@@ -115,6 +115,11 @@ export class Group implements IGroup{
     totalPaid:number;
     stats:any;
     
+    userOwned:number = 0;
+    userPaid:number = 0;
+    userReceived:number = 0;
+    userSpent:number = 0;
+    
     
     constructor(data?:any
     ){
@@ -171,6 +176,11 @@ export class Group implements IGroup{
             this.icon = data.icon;
             this.color = data.color;
             this.creator = new User(data.creator);
+            this.userOwned = data.userOwned;
+            this.userPaid = data.userPaid;
+            this.userReceived = data.userReceived;
+            this.userSpent = data.userSpent;
+            
             for(let i=0;i<data.users.length;i++){
                 this.users.push(new User(data.users[i]));
             }

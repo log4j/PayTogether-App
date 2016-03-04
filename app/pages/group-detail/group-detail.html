@@ -3,6 +3,15 @@
         <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>{{group.name}}</ion-title>
+    
+    
+    <ion-buttons end>
+        <button (click)="removeGroup()">
+            <span primary showWhen="ios">Delete</span>
+            <ion-icon name="trash"  showWhen="android"></ion-icon>
+        </button>
+    </ion-buttons>
+    
 </ion-navbar>
 
 <ion-content>
@@ -37,8 +46,8 @@
                 <ion-avatar item-left>
                     <img src="img/default.png">
                 </ion-avatar>
-                <h2>{{user.displayName}}</h2>
-                <p>Spent: {{user.totalSpent | currency:'USD':true:'2.2-2'}}</p>
+                <h2>{{user.displayName}} ({{user.totalPaid-user.totalSpent-user.totalReceived | currency:'USD':true:'2.2-2'}})</h2>
+                <p>Spent: {{user.totalSpent | currency:'USD':true:'2.2-2'}}, Paid: {{user.totalPaid | currency:'USD':true:'2.2-2'}}</p>
             </ion-item>
             <ion-item-options>
                 <button primary>

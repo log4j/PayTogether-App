@@ -37,14 +37,22 @@ export class GroupEditModalPage {
             this.currentPlatform = 'ios';
         }
 
-        // this.group = params.get('group');
-        console.log('user in Group edit want to fecth from _userService',_userService.user);
+        let group = params.get('group');
+        //console.log('user in Group edit want to fecth from _userService',_userService.user);
         
-        this.group = new Group();
-        this.group.addMember(_userService.user);
-        this.group.creator = _userService.user;
+        if(group){
+            this.group = group;
+            console.log('Group:',group);
+        }else{
+            this.group = new Group();
+            this.group.addMember(_userService.user);
+            this.group.creator = _userService.user;
+            this.group.name = '';
+        }
+        
+        
         this.user = _userService.user;
-        this.group.name = '';
+        
         
     }
 

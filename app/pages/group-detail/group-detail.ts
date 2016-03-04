@@ -1,8 +1,8 @@
-import {Platform, Page, Modal, NavController, NavParams, ActionSheet} from 'ionic-angular';
+import {Platform, Page, Alert, Modal, NavController, NavParams, ActionSheet} from 'ionic-angular';
 import {UserService} from '../../services/UserService'
 
 import {GroupEditModalPage} from '../group-edit/group-edit'
-import {Group,User} from '../../components/GroupInterface';
+import {Group, User} from '../../components/GroupInterface';
 
 @Page({
     templateUrl: 'build/pages/group-detail/group-detail.html'
@@ -39,7 +39,7 @@ export class GroupDetailPage {
     }
 
     showGroupEditModal() {
-        let myModal = Modal.create(GroupEditModalPage,{group:this.group});
+        let myModal = Modal.create(GroupEditModalPage, { group: this.group });
         this.nav.present(myModal);
     }
 
@@ -107,5 +107,28 @@ export class GroupDetailPage {
         // console.log($scope.activities);
         this.group.updateBalance();
 
+    }
+
+    removeGroup() {
+        let alert = Alert.create({
+            title: 'Delete Confirm',
+            message: 'Do you want to delete this group?',
+            buttons: [
+                {
+                    text: 'Cancel',
+                    role: 'cancel'
+                },
+                {
+                    text: 'Confirm',
+                    handler: () => {
+                        this.nav.popToRoot(
+                            //{animate: true,direction:'back',duration:400}
+                            );
+                        console.log('go back');
+                    }
+                }
+            ]
+        });
+        this.nav.present(alert);
     }
 }
