@@ -2,7 +2,8 @@ import {Platform, Page, Alert, Modal, NavController, NavParams, ActionSheet} fro
 import {UserService} from '../../services/UserService'
 
 import {GroupEditModalPage} from '../group-edit/group-edit'
-import {Group, User} from '../../components/GroupInterface';
+import {ActivityPayModalPage} from '../activity-pay/activity-pay'
+import {Group, User, Activity} from '../../components/GroupInterface';
 
 @Page({
     templateUrl: 'build/pages/group-detail/group-detail.html'
@@ -38,16 +39,31 @@ export class GroupDetailPage {
 
     }
 
+    /**
+     * popup group edit modal
+     */
     showGroupEditModal() {
         let myModal = Modal.create(GroupEditModalPage, { group: this.group });
         this.nav.present(myModal);
     }
+    
+    showActivityPayEditModal(activity:Activity, isPay:boolean, user:User) {
+        console.log(activity);
+        
+        let activityModal = Modal.create(
+            isPay? ActivityPayModalPage : ActivityPayModalPage,{
+                group:this.group,
+                activity:activity,
+                fromUser: user
+            }   
+        );
+        
+        
+        
+        this.nav.present(activityModal);
+    }
 
     presentActionSheet(event, user) {
-
-        let buttonHandler = (event) => {
-
-        }
 
         if (this.platform.is('android')) {
             var androidSheet = {
@@ -55,46 +71,36 @@ export class GroupDetailPage {
                 buttons: [
                     {
                         text: 'Paid By ' + user.displayName,
-                        handler: buttonHandler,
+                        handler: event => this.showActivityPayEditModal(null,true,user),
+                        
                         icon: 'share'
                     },
                     {
                         text: 'Transfer to ' + user.displayName,
-                        handler: buttonHandler,
+                        handler: event => this.showActivityPayEditModal(null,false,user),
                         icon: 'arrow-dropright-circle'
                     },
                     {
                         text: 'Cancel',
                         style: 'cancel',
-                        icon: 'md-close',
-                        handler: () => {
-                            console.log('Cancel clicked');
-                        }
+                        icon: 'md-close'
                     }
                 ]
             };
         }
-
 
         let actionSheet = ActionSheet.create(androidSheet || {
             title: 'Create Activity',
             buttons: [
                 {
                     text: 'Paid By ' + user.displayName,
-                    handler: () => {
-                        console.log('Archive clicked');
-                    }
+                    handler: event => this.showActivityPayEditModal(null,true,user)
                 }, {
                     text: 'Transfer to ' + user.displayName,
-                    handler: () => {
-                        console.log('Archive clicked');
-                    }
+                    handler: event => this.showActivityPayEditModal(null,false,user)
                 }, {
                     text: 'Cancel',
-                    style: 'cancel',
-                    handler: () => {
-                        console.log('Cancel clicked');
-                    }
+                    style: 'cancel'
                 }
             ]
         });

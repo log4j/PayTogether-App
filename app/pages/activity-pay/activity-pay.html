@@ -1,0 +1,67 @@
+<ion-toolbar class="android-attr">
+    <ion-title>
+        Pay Activity
+    </ion-title>
+    <ion-buttons start>
+        <button (click)="dismiss()">
+            <span primary showWhen="ios">Cancel</span>
+            <ion-icon name='close' showWhen="android"></ion-icon>
+        </button>
+    </ion-buttons>
+
+</ion-toolbar>
+
+
+<ion-content padding class="has-header">
+
+    <ion-list>
+        <form novalidate #form="ngForm" (ngSubmit)="onSubmitGroupInfo(form)">
+
+            <ion-item>
+                <ion-label>From</ion-label>
+                <ion-select [(ngModel)]="activity.from" (change)="log()">
+                    <ion-option [value]="user" *ngFor="#user of group.users">{{user.displayName}}</ion-option>
+                </ion-select>
+            </ion-item>
+
+            <ion-item>
+                <ion-label>Amount</ion-label>
+                <ion-input type="number"></ion-input>
+            </ion-item>
+
+            <ion-item>
+                <ion-label floating>Username</ion-label>
+                <ion-input type="text"></ion-input>
+            </ion-item>
+
+            <ion-list-header>
+                Members
+            </ion-list-header>
+
+            <ion-item>
+                <button fill primary full type="button" (click)="promptForName()">
+                    Add new Member
+                </button>
+            </ion-item>
+            
+            
+            
+            <ion-item *ngFor="#member of group.users, #i = index">
+                <ion-avatar item-left>
+                    <img src="img/default.png">
+                </ion-avatar>
+                <h2>{{member.displayName}}</h2>
+                <p *ngIf="member.invisible">anonymous user</p>
+                <p *ngIf="!member.invisible">{{member.email}}</p>
+                <button outline item-right [hidden]="member._id==user._id" (click)="removeMember(member,i)">
+                    Remove
+                </button>
+            </ion-item>
+
+            <button secondary round full type="submit">Save</button>
+
+
+        </form>
+    </ion-list>
+
+</ion-content>
