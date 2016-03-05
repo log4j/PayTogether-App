@@ -1,14 +1,15 @@
 import {App, Alert, IonicApp, Animation, Modal, Platform, NavController, NavParams, Page, Events, ViewController} from 'ionic-angular';
 import {forwardRef} from 'angular2/core';
-import {NgFor,NgClass} from 'angular2/common';
+import {NgFor,NgClass,PercentPipe,CurrencyPipe} from 'angular2/common';
 // import * as helpers from '../../../directives/helpers';
-import {Group, Activity} from '../../components/GroupInterface';
+import {Group, Activity, Share} from '../../components/GroupInterface';
 import {User} from '../../components/GroupInterface';
 import {UserService} from '../../services/UserService'
 
 @Page({
     templateUrl: './build/pages/activity-pay/activity-pay.html',
-    directives: [NgFor,NgClass]
+    directives: [NgFor,NgClass],
+    providers: [PercentPipe,CurrencyPipe]
 
 })
 export class ActivityPayModalPage {
@@ -23,13 +24,17 @@ export class ActivityPayModalPage {
     _userService: UserService;
     user: User;
     alertOptions:any;
+    percentageRemaining:number = 100;
+    amountRemaining:number = 0;
 
     constructor(
         platform: Platform,
         params: NavParams,
         viewCtrl: ViewController,
         private nav: NavController,
-        _userService: UserService
+        _userService: UserService,
+        private percentPipe: PercentPipe,
+        private currencyPipe: CurrencyPipe
     ) {
         this.viewCtrl = viewCtrl;
         this.params = params;
@@ -64,11 +69,6 @@ export class ActivityPayModalPage {
         
         this.user = _userService.user;
         
-            this.alertOptions = {
-            title: 'Pizza Toppings',
-            subTitle: 'Select your toppings'
-            };
-        
     }
 
     log(){
@@ -85,14 +85,21 @@ export class ActivityPayModalPage {
 
 
 
-    promptForName() {
+    promptForSharedValue(item) {
+        let previousValue = this.activity.sharedByPercentage?item.percentage:item.amount;
+        if(previousValue == 0)
+            previousValue = '';
         let prompt = Alert.create({
-            title: 'New Member',
-            message: "Enter the member's email or username, or a simple tag",
+            title: 'How much this member shared',
+            message: this.activity.sharedByPercentage?
+                this.percentPipe.transform(this.percentageRemaining/100,['.2-2'])
+                : this.currencyPipe.transform(this.amountRemaining + item.amount,['USD','2.2-2'])
+                +" remaining",
             inputs: [
                 {
-                    name: 'Name',
-                    placeholder: 'Name'
+                    name: 'value',
+                    value: previousValue,
+                    placeholder: 'Percentage'
                 },
             ],
             buttons: [
@@ -104,31 +111,46 @@ export class ActivityPayModalPage {
                 {
                     text: 'Save',
                     handler: data => {
-                        this._userService.getUserByUsernameOrEmail(data.Name)
-                        .subscribe(
-                            res =>{
-                                let result = false;
-                                if(res!=null){
-                                    result = this.group.addMember(res);
-                                }else{
-                                    result = this.group.addMember( User.createUserByDisplayName(data.Name));
-                                }
-                                if(!result){
-                                    // let alert = Alert.create({
-                                    //     title: 'Add Failed',
-                                    //     subTitle: 'Member already in list!',
-                                    //     buttons: ['Ok']
-                                    // });
-                                    // this.nav.present(alert);
-                                }
-                            }
-                        )
-                        
+                        console.log(data.value);
+                        if(this.activity.sharedByPercentage){
+                            item.percentage = parseFloat(parseFloat(data.value).toFixed(2));
+                            item.final = this.activity.amount? parseFloat((this.activity.amount*item.percentage/100).toFixed(2)):0;
+                        }else{
+                            item.amount = parseFloat(parseFloat(data.value).toFixed(2));
+                            item.final = item.amount;
+                        }
+                        this.calculateRemaining();
                     }
                 }
             ]
         });
         this.nav.present(prompt);
+    }
+    
+    /**
+     * calculate the percentage remaining and amount remaining
+     */
+    calculateRemaining(){
+        let totalPercentage = 0;
+        let totalAmount = 0;
+        for(let i=0;i<this.activity.to.length;i++){
+            totalPercentage += this.activity.to[i].percentage;
+            totalAmount += this.activity.to[i].amount;
+        }
+        this.percentageRemaining = 100 - totalPercentage;
+        this.amountRemaining = this.activity.amount?this.activity.amount - totalAmount: 0 - totalAmount;
+    }
+    
+    updateToFinalValues(){
+        for(let i=0;i<this.activity.to.length;i++){
+            let item = this.activity.to[i];
+            if(this.activity.sharedByPercentage){
+                item.final = this.activity.amount? parseFloat((this.activity.amount*item.percentage/100).toFixed(2)):0;
+            }else{
+                item.final = item.amount;
+            }
+        }
+        this.calculateRemaining();
     }
     
     onSubmitGroupInfo(form){

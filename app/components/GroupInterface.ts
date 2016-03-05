@@ -324,7 +324,7 @@ export class Group implements IGroup{
     }
 }
 
-class Share{
+export class Share{
     amount:number;
     final:number;
     percentage:number;
@@ -332,7 +332,7 @@ class Share{
     user:User;
     
     constructor(data?:any){
-        this.amount = data.amout;
+        this.amount = data.amount;
         this.final = data.final;
         this.percentage = data.percentage;
         this.selected = data.selected;
