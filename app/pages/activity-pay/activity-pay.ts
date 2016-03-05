@@ -26,6 +26,7 @@ export class ActivityPayModalPage {
     alertOptions:any;
     percentageRemaining:number = 100;
     amountRemaining:number = 0;
+    selectedIds =[];
 
     constructor(
         platform: Platform,
@@ -60,6 +61,7 @@ export class ActivityPayModalPage {
             this.activity.from = this.fromUser;
             this.activity.sharedByPercentage = true;
             this.activity.initialToByUsers(this.group.users);
+            this.initSelectedIds();
             console.log(this.activity);
             //this.group.addMember(_userService.user);
             //this.group.creator = _userService.user;
@@ -72,7 +74,26 @@ export class ActivityPayModalPage {
     }
 
     log(){
-        console.log(this.activity.from);    
+        //console.log(this.activity.from);    
+    }
+    
+    initSelectedIds(){
+        this.selectedIds = [];
+        for(let i=0;i<this.activity.to.length;i++)
+            if(this.activity.to[i].selected)
+                this.selectedIds.push(this.activity.to[i].user._id);
+    }
+    
+    selectMembers(){
+        let tempMap = {};
+        for(let i=0;i<this.selectedIds.length;i++)
+            tempMap[this.selectedIds[i]] = true;
+        for(let i=0;i<this.activity.to.length;i++)
+            if(tempMap[this.activity.to[i].user._id])
+                this.activity.to[i].selected = true;
+            else
+                this.activity.to[i].selected = false;
+            
     }
     
     dismiss() {
