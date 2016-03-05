@@ -53,8 +53,9 @@ export class ActivityPayModalPage {
             this.activity = new Activity(null);
             this.activity.isPay = true;
             this.activity.from = this.fromUser;
-            
-            console.log(this.activity.from);
+            this.activity.sharedByPercentage = true;
+            this.activity.initialToByUsers(this.group.users);
+            console.log(this.activity);
             //this.group.addMember(_userService.user);
             //this.group.creator = _userService.user;
             //this.group.name = '';

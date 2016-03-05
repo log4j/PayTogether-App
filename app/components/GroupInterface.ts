@@ -348,6 +348,7 @@ export class Activity {
     isPay: boolean;
     name:string;
     date: Date;   
+    sharedByPercentage: boolean;
     
     constructor(data:any){
         this.to = [];
@@ -356,9 +357,22 @@ export class Activity {
             this.from = new User(data.from);
             this.amount = data.amount;
             this.isPay = data.is_pay;
+            this.sharedByPercentage = data.share_by_percentage;
             
             for(let i=0;i<data.to.length;i++)
                 this.to.push(new Share(data.to[i]))
         }
+    }
+    
+    initialToByUsers(users:User[]){
+        this.to = [];
+        for(let i=0;i<users.length;i++)
+            this.to.push(new Share({
+                amount:0,
+                final: 0,
+                percentage: 0,
+                selected: true,
+                user: users[i]
+            }));
     }
 }

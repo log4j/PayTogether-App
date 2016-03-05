@@ -26,35 +26,31 @@
 
             <ion-item>
                 <ion-label>Amount</ion-label>
-                <ion-input type="number"></ion-input>
+                <ion-input type="number" [(ngModel)]="activity.amount"></ion-input>
             </ion-item>
 
             <ion-item>
                 <ion-label floating>Username</ion-label>
-                <ion-input type="text"></ion-input>
+                <ion-input type="number" [(ngModel)]="activity.amount"></ion-input>
             </ion-item>
-
-            <ion-list-header>
-                Members
-            </ion-list-header>
 
             <ion-item>
-                <button fill primary full type="button" (click)="promptForName()">
-                    Add new Member
-                </button>
+                <ion-label>Share By</ion-label>
+                <ion-select [(ngModel)]="activity.sharedByPercentage">
+                    <ion-option [value]="true">Percentage</ion-option>
+                    <ion-option [value]="false">Specific Amount</ion-option>
+                </ion-select>
             </ion-item>
             
-            
-            
-            <ion-item *ngFor="#member of group.users, #i = index">
+            <ion-item *ngFor="#item of activity.to, #i = index">
                 <ion-avatar item-left>
                     <img src="img/default.png">
                 </ion-avatar>
-                <h2>{{member.displayName}}</h2>
-                <p *ngIf="member.invisible">anonymous user</p>
-                <p *ngIf="!member.invisible">{{member.email}}</p>
-                <button outline item-right [hidden]="member._id==user._id" (click)="removeMember(member,i)">
-                    Remove
+                <h2>{{item.user.displayName}}</h2>
+                <p *ngIf="item.user.invisible">anonymous user</p>
+                <p *ngIf="!item.user.invisible">{{item.user.email}}</p>
+                <button dark clear item-right>
+                    {{item.percentage | percent:'.2'}} q{{item.amount | currency:'USD':true:'.2-2'}}qq
                 </button>
             </ion-item>
 
