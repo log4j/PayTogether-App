@@ -3,7 +3,7 @@ import {JsonHttp} from '../utils/JsonHttp';
 import {Observable} from 'rxjs/Observable';
 import {LocalStorage} from 'angular2-local-storage/local_storage';
 
-import {User,Group} from '../components/GroupInterface'
+import {User,Group,Activity} from '../components/GroupInterface'
 import {Result} from '../components/HttpResult'
 
 @Injectable()
@@ -100,6 +100,16 @@ export class UserService {
                 }
             }
         )
+    }
+    
+    
+    createOrUpdateActivity(activity:Activity):Observable<Result>{
+        let postData = activity.toObject();
+        if(postData._id){
+            return this._http.put('activity/'+postData._id, postData);
+        }else{
+            return this._http.post('activity', postData);
+        }
     }
     
 }

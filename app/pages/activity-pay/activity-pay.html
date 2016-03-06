@@ -15,8 +15,11 @@
 <ion-content padding class="has-header">
 
     <ion-list>
-        <form novalidate #form="ngForm" (ngSubmit)="onSubmitGroupInfo(form)">
-
+        <form novalidate #form="ngForm" (ngSubmit)="submitActivity(form)">
+            <ion-item>
+                <ion-label>For what</ion-label>
+                <ion-input type="text" [(ngModel)]="activity.name" item-right ></ion-input>
+            </ion-item>
             <ion-item>
                 <ion-label>From</ion-label>
                 <ion-select [(ngModel)]="activity.from" (change)="log()">
@@ -29,7 +32,7 @@
                     <ion-option [value]="user._id" *ngFor="#user of group.users">{{user.displayName}}</ion-option>
                 </ion-select>
             </ion-item>
-
+            
             <ion-item>
                 <ion-label>Amount</ion-label>
                 <ion-input type="number" [(ngModel)]="activity.amount" item-right (change)="updateToFinalValues()"></ion-input>

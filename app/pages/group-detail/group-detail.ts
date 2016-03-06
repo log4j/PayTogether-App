@@ -58,6 +58,13 @@ export class GroupDetailPage {
             }   
         );
         
+        activityModal.onDismiss((data:Activity)=>{
+            if(data){
+                // console.log(data);
+                this.group.activities.unshift(data);
+                this.group.updateBalance();
+            }
+        });
         
         
         this.nav.present(activityModal);

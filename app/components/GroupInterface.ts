@@ -123,7 +123,14 @@ export class Group implements IGroup{
     
     constructor(data?:any
     ){
-        this.updateDataByJson(data);
+        if(data){
+            if(typeof data === "string"){
+                this._id = data;
+            }else{
+                this.updateDataByJson(data);
+            }
+        }
+        
     }
     
     /**
@@ -338,6 +345,16 @@ export class Share{
         this.selected = data.selected;
         this.user = new User(data.user);
     }
+    
+    toObject() : any {
+        return {
+            amount: this.amount,
+            final: this.final,
+            percentage: this.percentage,
+            selected: this.selected,
+            user: this.user._id
+        }
+    }
 }
 
 export class Activity {
@@ -349,6 +366,7 @@ export class Activity {
     name:string;
     date: Date;   
     sharedByPercentage: boolean;
+    group: Group;
     
     constructor(data:any){
         this.to = [];
@@ -357,10 +375,14 @@ export class Activity {
             this.from = new User(data.from);
             this.amount = data.amount;
             this.isPay = data.is_pay;
+            this.name = data.name;
             this.sharedByPercentage = data.share_by_percentage;
+            this.group = new Group(data.group);
             
             for(let i=0;i<data.to.length;i++)
                 this.to.push(new Share(data.to[i]))
+                
+                
         }
     }
     
@@ -374,5 +396,23 @@ export class Activity {
                 selected: true,
                 user: users[i]
             }));
+    }
+    
+    toObject():any {
+        let obj = {
+            _id: this._id,
+            name: this.name,
+            group: this.group._id,
+            amount: this.amount,
+            from: this.from._id,
+            date: this.date,
+            is_pay: this.isPay,
+            share_by_percentage: this.sharedByPercentage,
+            to: []
+        }
+        for(let i=0;i<this.to.length;i++){
+            obj.to.push(this.to[i].toObject());
+        }
+        return obj;
     }
 }

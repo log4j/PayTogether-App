@@ -67,7 +67,7 @@
         </ion-list-header>
         <ion-item *ngFor="#activity of group.activities">
             <ion-icon name="{{activity.isPay?'cart':'pricetags'}}" item-left></ion-icon>
-                {{activity.from.displayName}} paid for {{activity.name }}
+                {{activity.from.displayName}} paid for {{activity.name}}
             <ion-note  item-right>{{activity.amount | currency:'USD':'2.2-2'}}</ion-note>
         </ion-item>
 

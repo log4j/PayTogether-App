@@ -60,6 +60,7 @@ export class ActivityPayModalPage {
             this.activity.isPay = true;
             this.activity.from = this.fromUser;
             this.activity.sharedByPercentage = true;
+            this.activity.group = this.group;
             this.activity.initialToByUsers(this.group.users);
             this.initSelectedIds();
             console.log(this.activity);
@@ -146,6 +147,18 @@ export class ActivityPayModalPage {
             ]
         });
         this.nav.present(prompt);
+    }
+    
+    submitActivity(){
+        this._userService.createOrUpdateActivity(this.activity)
+        .subscribe((res)=>{
+            if(res.result){
+                console.log(res);
+                this.viewCtrl.dismiss(new Activity(res.data));
+            }else{
+                
+            }         
+        });
     }
     
     /**
