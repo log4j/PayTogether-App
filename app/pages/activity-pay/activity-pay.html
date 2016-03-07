@@ -18,11 +18,12 @@
         <form novalidate #form="ngForm" (ngSubmit)="submitActivity(form)">
             <ion-item>
                 <ion-label>For what</ion-label>
-                <ion-input type="text" [(ngModel)]="activity.name" item-right ></ion-input>
+                <ion-input type="text" [(ngModel)]="activity.name" item-right required
+                    ngControl="name" #name="ngForm"></ion-input>
             </ion-item>
             <ion-item>
                 <ion-label>From</ion-label>
-                <ion-select [(ngModel)]="activity.from" (change)="log()">
+                <ion-select [(ngModel)]="activity.from">
                     <ion-option [value]="user" *ngFor="#user of group.users">{{user.displayName}}</ion-option>
                 </ion-select>
             </ion-item>
@@ -35,7 +36,8 @@
             
             <ion-item>
                 <ion-label>Amount</ion-label>
-                <ion-input type="number" [(ngModel)]="activity.amount" item-right (change)="updateToFinalValues()"></ion-input>
+                <ion-input type="number" [(ngModel)]="activity.amount" item-right (change)="updateToFinalValues()" required
+                    ngControl="amount" #amount="ngForm"></ion-input>
             </ion-item>
 <!--
             <ion-item>

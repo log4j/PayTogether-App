@@ -1,6 +1,6 @@
 import {App, Alert, IonicApp, Animation, Modal, Platform, NavController, NavParams, Page, Events, ViewController} from 'ionic-angular';
 import {forwardRef} from 'angular2/core';
-import {NgFor,NgClass} from 'angular2/common';
+import {NgFor, NgClass} from 'angular2/common';
 // import * as helpers from '../../../directives/helpers';
 import {Group} from '../../components/GroupInterface';
 import {User} from '../../components/GroupInterface';
@@ -8,7 +8,7 @@ import {UserService} from '../../services/UserService'
 
 @Page({
     templateUrl: './build/pages/group-edit/group-edit.html',
-    directives: [NgFor,NgClass]
+    directives: [NgFor, NgClass]
 
 })
 export class GroupEditModalPage {
@@ -38,29 +38,27 @@ export class GroupEditModalPage {
         }
 
         let group = params.get('group');
-        //console.log('user in Group edit want to fecth from _userService',_userService.user);
         
-        if(group){
+        if (group) {
             this.group = group;
-            console.log('Group:',group);
-        }else{
+        } else {
             this.group = new Group();
             this.group.addMember(_userService.user);
             this.group.creator = _userService.user;
             this.group.name = '';
         }
-        
-        
+
+
         this.user = _userService.user;
-        
-        
+
+
     }
 
     dismiss() {
         this.viewCtrl.dismiss();
     }
-    
-    removeMember(user:User,index:number){
+
+    removeMember(user: User, index: number) {
         this.group.removeMember(index);
     }
 
@@ -85,15 +83,15 @@ export class GroupEditModalPage {
                     text: 'Save',
                     handler: data => {
                         this._userService.getUserByUsernameOrEmail(data.Name)
-                        .subscribe(
-                            res =>{
+                            .subscribe(
+                            res => {
                                 let result = false;
-                                if(res!=null){
+                                if (res != null) {
                                     result = this.group.addMember(res);
-                                }else{
-                                    result = this.group.addMember( User.createUserByDisplayName(data.Name));
+                                } else {
+                                    result = this.group.addMember(User.createUserByDisplayName(data.Name));
                                 }
-                                if(!result){
+                                if (!result) {
                                     // let alert = Alert.create({
                                     //     title: 'Add Failed',
                                     //     subTitle: 'Member already in list!',
@@ -102,34 +100,34 @@ export class GroupEditModalPage {
                                     // this.nav.present(alert);
                                 }
                             }
-                        )
-                        
+                            )
+
                     }
                 }
             ]
         });
         this.nav.present(prompt);
     }
-    
-    onSubmitGroupInfo(form){
-        if(form.valid){
+
+    onSubmitGroupInfo(form) {
+        if (form.valid) {
             //submit
-            console.log(form);
-            
+
             this._userService.updateGroup(this.group)
-            .subscribe(
+                .subscribe(
                 res => {
-                    console.log(res);
-                    if(res.result){
+                    if (res.result) {
                         //submit,
                         this.viewCtrl.dismiss(new Group(res.data));
-                    }else{
+                    } else {
                         //show alert
                     }
                 }
-            )
-            
+                )
+
         }
-        
+
     }
+
+
 }

@@ -26,13 +26,11 @@ export class GroupListPage {
         _userService.getGroups()
             .subscribe(
             data => {
-                // console.log('from getGroups',data);
                 //this.groups = data.data;
                 this.groups = data;
                 // for(let i=0;i<data.length;i++){
                 //     this.groups.push(data[i]);
                 // }
-                console.log(data);
             })
         
         // If we navigated to this page, we will have an item available as a nav param
@@ -64,20 +62,16 @@ export class GroupListPage {
     }
 
     doRefresh(refresher) {
-        // console.log('Doing Refresh', refresher)
 
         setTimeout(() => {
             refresher.complete();
-            // console.log("Complete");
         }, 5000);
     }
 
     doStart(refresher) {
-        // console.log('Doing Start', refresher);
     }
 
     doPulling(refresher) {
-        // console.log('Pulling', refresher);
     }
     
     showGroupNewModal() {

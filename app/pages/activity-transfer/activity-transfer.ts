@@ -7,12 +7,12 @@ import {User} from '../../components/GroupInterface';
 import {UserService} from '../../services/UserService'
 
 @Page({
-    templateUrl: './build/pages/activity-pay/activity-pay.html',
+    templateUrl: './build/pages/activity-transfer/activity-transfer.html',
     directives: [NgFor, NgClass],
     providers: [PercentPipe, CurrencyPipe]
 
 })
-export class ActivityPayModalPage {
+export class ActivityTransferModalPage {
     platform: any;
     viewCtrl: any;
     params: any;
@@ -53,23 +53,35 @@ export class ActivityPayModalPage {
         if (activity) {
             this.activity = activity;
             //the activity.from may be different object than this.group.users
-            for(let i=0;i<this.group.users.length;i++)
+            for(let i=0;i<this.group.users.length;i++){
                 if(this.group.users[i]._id==this.activity.from._id){
                     this.activity.from = this.group.users[i];
-                    break;
                 }
+                if(this.group.users[i]._id==this.activity.to[0].user._id){
+                    this.activity.to[0].user = this.group.users[i];
+                }
+            }
         } else {
             this.fromUser = params.get('fromUser');
             this.activity = new Activity(null);
-            this.activity.isPay = true;
+            this.activity.isPay = false;
             this.activity.from = this.fromUser;
             this.activity.sharedByPercentage = true;
             this.activity.group = this.group;
-            this.activity.initialToByUsers(this.group.users);
+            //init activity.to.user to another person
+            for(let i=0;i<this.group.users.length;i++){
+                if(this.group.users[i]._id!=this.activity.from._id){
+                    this.activity.initialToByOneUser(this.group.users[i]);
+                    break;
+                }
+            }
+            if(this.group.users.length==1){
+                this.activity.initialToByOneUser(this.group.users[0]);
+            }
+            
+            
         }
 
-        this.initSelectedIds();
-        this.calculateRemaining();
         this.user = _userService.user;
 
     }
@@ -167,19 +179,6 @@ export class ActivityPayModalPage {
 
             return;
         }
-        if ((this.activity.sharedByPercentage && this.percentageRemaining.toFixed(2) != '0.00')
-        || (!this.activity.sharedByPercentage && this.amountRemaining.toFixed(2) != '0.00')){
-            let alert = Alert.create({
-                title: 'Form invalid',
-                subTitle: 'Remaining is not zero. Remaining:'+(this.activity.sharedByPercentage ?
-                this.percentPipe.transform(this.percentageRemaining / 100, ['.2-2'])
-                : this.currencyPipe.transform(this.amountRemaining, ['USD', '2.2-2'])),
-                buttons: ['OK']
-            });
-            this.nav.present(alert);
-
-            return;
-        }
 
         this.activity.amount = parseFloat(this.activity.amount+'');
 
@@ -223,6 +222,12 @@ export class ActivityPayModalPage {
     }
 
     
+    parseAmount(){
+        this.activity.amount = parseFloat(this.activity.amount+'');
+        
+        this.activity.to[0].amount = this.activity.amount;
+        this.activity.to[0].final = this.activity.amount;
+    }
     
     
 }

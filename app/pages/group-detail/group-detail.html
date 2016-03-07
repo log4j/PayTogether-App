@@ -42,7 +42,7 @@
             Members
         </ion-list-header>
         <ion-item-sliding *ngFor="#user of group.users">
-            <ion-item (click)="presentActionSheet($event,user)">
+            <ion-item (click)="presentActionSheetOnUser($event,user)">
                 <ion-avatar item-left>
                     <img src="img/default.png">
                 </ion-avatar>
@@ -65,10 +65,10 @@
         <ion-list-header>
             Activities
         </ion-list-header>
-        <ion-item *ngFor="#activity of group.activities">
+        <ion-item *ngFor="#activity of group.activities" (click)="presentActionSheetOnActivity($event, activity)">
             <ion-icon name="{{activity.isPay?'cart':'pricetags'}}" item-left></ion-icon>
                 {{activity.from.displayName}} paid for {{activity.name}}
-            <ion-note  item-right>{{activity.amount | currency:'USD':'2.2-2'}}</ion-note>
+            <ion-note  item-right>{{currency(activity.amount)}}</ion-note>
         </ion-item>
 
     </ion-list>

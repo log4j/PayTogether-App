@@ -46,8 +46,8 @@ export class AccountPage {
                     this.nav.present(alert);
                 }
             },
-            err => console.log(err),
-            () => console.log('Random Quote Complete')
+            err => {},
+            () => {}
             );
 
     }

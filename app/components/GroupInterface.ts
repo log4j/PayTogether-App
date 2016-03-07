@@ -126,6 +126,7 @@ export class Group implements IGroup{
         if(data){
             if(typeof data === "string"){
                 this._id = data;
+                this.users = [];
             }else{
                 this.updateDataByJson(data);
             }
@@ -137,6 +138,8 @@ export class Group implements IGroup{
      * add a User as member among this Group
      */
     addMember(user: User):boolean {
+        if(!this.users)
+            this.users = [];
         //check whether this name already exist;
         for(let i=0;i<this.users.length;i++){
             if(user._id && user._id == this.users[i]._id){
@@ -266,8 +269,6 @@ export class Group implements IGroup{
         if (this.totalSpent == 0)
             this.totalSpent = 0.0001;
         
-        // console.log($scope.group);
-        // console.log($scope.activities);
         
         //build activity stats data
         var stats = {
@@ -302,11 +303,9 @@ export class Group implements IGroup{
         stats.title.push('Amount');
         stats.title.push('Paid By');
 
-        console.log(stats);
 
         this.stats = stats;
 
-        console.log(this.users);
     }
     
     /**
@@ -396,6 +395,20 @@ export class Activity {
                 selected: true,
                 user: users[i]
             }));
+    }
+    
+    initialToByOneUser(user:User){
+        this.to = [];
+        this.to.push(
+            new Share({
+                amount:0,
+                final: 0,
+                percentage: 0,
+                selected: true,
+                user: user
+            })
+        );
+        this.to[0].user = user;
     }
     
     toObject():any {

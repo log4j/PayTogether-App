@@ -23,16 +23,16 @@
                 ngControl="name" #name="ngForm"></ion-input>
         </ion-item>
 
-        <ion-list-header>
+        <ion-list-header [hidden]="group._id">
             Members
         </ion-list-header>
 
-        <ion-item>
+        <ion-item [hidden]="group._id">
             <button fill primary full type="button" (click)="promptForName()">
                 Add new Member
             </button>
         </ion-item>
-        <ion-item *ngFor="#member of group.users, #i = index">
+        <ion-item *ngFor="#member of group.users, #i = index" [hidden]="group._id">
             <ion-avatar item-left>
                 <img src="img/default.png">
             </ion-avatar>

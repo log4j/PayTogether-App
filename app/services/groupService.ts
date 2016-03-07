@@ -12,7 +12,6 @@ export class GroupService {
 
     constructor(private _http: JsonHttp, private _localStorage: LocalStorage) {
 
-        console.log('create user service');
     }
 
     

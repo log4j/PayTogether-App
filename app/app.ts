@@ -1,7 +1,7 @@
-import {App, IonicApp, Platform} from 'ionic-angular';
+import {App, IonicApp, Platform, Alert} from 'ionic-angular';
 import {Injectable, OnDestroy} from 'angular2/core';
 
-import {NgClass} from 'angular2/common';
+import {NgClass,PercentPipe, CurrencyPipe} from 'angular2/common';
 import {Config} from './services/Config';
 import {JsonHttp} from './utils/JsonHttp';
 import {UserService} from './services/UserService';
@@ -77,9 +77,31 @@ class MyApp {
     }
 
     logout() {
-        this.app.getComponent('leftMenu').close();
-        // navigate to the new page if it is not the current page
         let nav = this.app.getComponent('nav');
+        
+        // let alert = Alert.create({
+        //     title: 'Delete Confirm',
+        //     message: 'Do you want to delete this group?',
+        //     buttons: [
+        //         {
+        //             text: 'Cancel',
+        //             role: 'cancel'
+        //         },
+        //         {
+        //             text: 'Confirm',
+        //             handler: () => {
+                        
+        //                 // navigate to the new page if it is not the current page
+        //                 nav.setRoot(AccountPage);
+        //                 this.app.getComponent('leftMenu').close();
+        //             }
+        //         }
+        //     ]
+        // });
+        // nav.present(alert);
+        
         nav.setRoot(AccountPage);
+        this.app.getComponent('leftMenu').close();
+        
     }
 }
