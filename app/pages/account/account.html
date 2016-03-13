@@ -1,31 +1,33 @@
-
 <ion-navbar *navbar>
-  <!--<button menuToggle>
+    <!--<button menuToggle>
     <ion-icon name="menu"></ion-icon>
   </button>-->
-  <ion-title>Pay Together</ion-title>
+    <ion-title>Login</ion-title>
 </ion-navbar>
 
 
 <ion-content padding class="getting-started">
 
-  <h3>Welcome to your first Ionic app!</h3>
 
-  <ion-list>
+    <ion-list>
 
-  <ion-item>
-    <ion-label floating>Username</ion-label>
-    <ion-input type="text" [(ngModel)]="loginData.username"></ion-input>
-  </ion-item>
+        <ion-item class='logo'>
+            <img src='img/logo-login.png'>
+        </ion-item>
 
-  <ion-item>
-    <ion-label floating>Password</ion-label>
-    <ion-input type="password" [(ngModel)]="loginData.password"></ion-input>
-  </ion-item>
+        <ion-item class='no-border-top'>
+            <ion-label floating>Username</ion-label>
+            <ion-input type="text" [(ngModel)]="loginData.username"></ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label floating>Password</ion-label>
+            <ion-input type="password" [(ngModel)]="loginData.password"></ion-input>
+        </ion-item>
 
 
-<button danger round full (click)="submitLogin()">Login</button>
+        <button class='login-submit' ptred large round full (click)="submitLogin()">Login</button>
 
-</ion-list>
+    </ion-list>
 
 </ion-content>

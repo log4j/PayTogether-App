@@ -19,6 +19,8 @@ import {BusyComponent, BusyCtrl} from './components/busy-component/busy-componen
 
 import {LocalStorage} from 'angular2-local-storage/local_storage';
 
+import {StatusBar} from 'ionic-native';
+
 
 @App({
     templateUrl: 'build/app.html',
@@ -62,7 +64,11 @@ class MyApp {
             //
             // For example, we might change the StatusBar color. This one below is
             // good for dark backgrounds and light text:
-            // StatusBar.setStyle(StatusBar.LIGHT_CONTENT)
+            // StatusBar.backgroundColorByName("#766ea8");
+            
+            StatusBar.backgroundColorByHexString("#766ea8");
+            // StatusBar.overlaysWebView(true);
+            // StatusBar.hide();
             //LocalStorageSubscriber(this.app);
       
         });
