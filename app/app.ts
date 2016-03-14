@@ -66,7 +66,7 @@ class MyApp {
             // good for dark backgrounds and light text:
             // StatusBar.backgroundColorByName("#766ea8");
             
-            StatusBar.backgroundColorByHexString("#766ea8");
+            StatusBar.backgroundColorByHexString("#5d568f");
             // StatusBar.overlaysWebView(true);
             // StatusBar.hide();
             //LocalStorageSubscriber(this.app);

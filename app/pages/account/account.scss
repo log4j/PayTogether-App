@@ -3,7 +3,7 @@ ion-page {
     background-size: 100%;
 }
 ion-content {
-    background: inherit;
+    background: transparent;
 }
 ion-item {
     background: none !important;
@@ -32,7 +32,7 @@ ion-item.logo .item-inner {
     margin-bottom: 20px;
 }
 
-button.login-submit {
+button.bottom-submit {
     margin-top: 40px !important;
 }
 

@@ -1,4 +1,4 @@
-<ion-navbar *navbar>
+<ion-navbar dark *navbar>
     <button menuToggle *ngIf="!group">
         <ion-icon name="menu"></ion-icon>
     </button>
@@ -15,8 +15,14 @@
 </ion-navbar>
 
 <ion-content>
-
-    <ion-card>
+    <ion-item class="item-title">
+        <h2>{{group.name}}</h2>
+        <p class="desc" *ngIf="group.userOwned==0"> You do not owe anything </p>
+        <p class="desc" *ngIf="group.userOwned<0"> You are owed <strong class="">{{-group.userOwned | currency:'USD':true:'2.2-2'}}</strong> </p>
+        <p class="desc" *ngIf="group.userOwned>0"> You owe <strong class="">{{group.userOwned | currency:'USD':true:'2.2-2'}}</strong> </p>
+    </ion-item>
+    
+    <ion-card [hidden]='true'>
         <ion-card-header>
             {{group.name}}
         </ion-card-header>
@@ -38,11 +44,12 @@
     </ion-card>
 
     <ion-list>
-        <ion-list-header>
+        <ion-item class='item-subtitle'>
             Members
-        </ion-list-header>
+        </ion-item>
+        
         <ion-item-sliding *ngFor="#user of group.users">
-            <ion-item (click)="presentActionSheetOnUser($event,user)">
+            <ion-item (click)="presentActionSheetOnUser($event,user)" class='item-member'>
                 <ion-avatar item-left>
                     <img src="img/default.png">
                 </ion-avatar>
@@ -62,10 +69,23 @@
         </ion-item-sliding>
 
 
-        <ion-list-header>
+        <ion-item class='item-subtitle'>
             Activities
-        </ion-list-header>
-        <ion-item *ngFor="#activity of group.activities" (click)="presentActionSheetOnActivity($event, activity)">
+        </ion-item>
+        <ion-item *ngFor="#activity of group.activities" 
+        [ngClass]="{'type-transfer':!activity.isPay,'type-pay':activity.isPay}"
+        (click)="presentActionSheetOnActivity($event, activity)" class='item-activity'>
+            <ion-avatar item-left>
+                <span class='day'>{{activity.date | date :'dd'}}</span>
+                <span class='month'>{{activity.date | date :'MMM'}}</span>
+            </ion-avatar>
+                {{activity.from.displayName}} paid for {{activity.name}}
+            <ion-note  item-right>{{currency(activity.amount)}}</ion-note>
+        </ion-item>
+        
+        
+        <ion-item *ngFor="#activity of group.activities" [hidden] = 'true'
+         (click)="presentActionSheetOnActivity($event, activity)">
             <ion-icon name="{{activity.isPay?'cart':'pricetags'}}" item-left></ion-icon>
                 {{activity.from.displayName}} paid for {{activity.name}}
             <ion-note  item-right>{{currency(activity.amount)}}</ion-note>

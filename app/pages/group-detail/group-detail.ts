@@ -31,6 +31,7 @@ export class GroupDetailPage {
             .subscribe(res => {
                 this.group.updateDataByJson(res.data);
                 this.calculateSpending();
+                console.log('data',this.group);
             });
 
         _userService.getActivityList(this.group._id)
@@ -38,6 +39,7 @@ export class GroupDetailPage {
             res => {
                 this.group.updateActivitiesByJson(res.data);
                 this.calculateSpending();
+                console.log('activity',this.group);
             }
             )
 
@@ -67,7 +69,7 @@ export class GroupDetailPage {
                     this.group.activities.unshift(data);
                 }else{
                 }
-                this.group.updateBalance();
+                this.calculateSpending();
             }
         });
 
@@ -170,7 +172,11 @@ export class GroupDetailPage {
 
     calculateSpending() {
         this.group.updateBalance();
-
+        for(let i=0;i<this.group.users.length;i++){
+            if(this.group.users[i]._id == this._userService.user._id){
+                this.group.userOwned = this.group.users[i].totalPaid - this.group.users[i].totalSpent - this.group.users[i].totalReceived;
+            }
+        }
     }
 
     removeGroup() {
@@ -218,7 +224,7 @@ export class GroupDetailPage {
                                         break;
                                     }
                                 }
-                                this.group.updateBalance();
+                                this.calculateSpending();
                             } 
                         });
                     }

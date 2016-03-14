@@ -1,19 +1,30 @@
-<ion-navbar *navbar>
+<ion-navbar *navbar dark>
     <button menuToggle>
         <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>Your Groups</ion-title>
 
-    <ion-buttons end>
+    <!--<ion-buttons end>
         <button (click)="showGroupNewModal()">
             <ion-icon name="add-circle"></ion-icon>
         </button>
-    </ion-buttons>
+    </ion-buttons>-->
 </ion-navbar>
 
 <ion-content id="group-list">
     <ion-refresher (start)="doStart($event)" (refresh)="doRefresh($event)" (pulling)="doPulling($event)">
     </ion-refresher>
+
+    <ion-item class='item-title'>
+        <h2>Groups</h2>
+        <p>{{groups.length}}</p>
+
+    </ion-item>
+
+    <ion-item class='item-group' *ngFor="#group of groups" (click)="chooseGroup($event, group)">
+        <h2>{{group.name}}</h2>
+        <p>{{group.users.length}} MEMBERS</p>
+    </ion-item>
 
     <ion-card *ngFor="#group of groups">
         <ion-card-header>
@@ -49,4 +60,10 @@
     <div *ngIf="selectedItem" padding>
         You navigated here from <b>{{selectedItem.title}}</b>
     </div>-->
+
+
 </ion-content>
+
+<button fab ptred fab-bottom fab-right style="z-index: 999" (click)="showGroupNewModal()">
+    <ion-icon name='add' is-active="true"></ion-icon>
+</button>

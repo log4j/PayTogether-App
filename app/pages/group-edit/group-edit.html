@@ -1,4 +1,4 @@
-<ion-toolbar class="android-attr">
+<ion-toolbar class="android-attr" dark>
     <ion-title>
         Description
     </ion-title>
@@ -27,11 +27,11 @@
             Members
         </ion-list-header>
 
-        <ion-item [hidden]="group._id">
-            <button fill primary full type="button" (click)="promptForName()">
-                Add new Member
+        
+            <button fill round [hidden]='group._id' style='float:right;' ptgreen item-right type="button" (click)="promptForName()">
+                <ion-icon name='add'></ion-icon>Member
             </button>
-        </ion-item>
+        
         <ion-item *ngFor="#member of group.users, #i = index" [hidden]="group._id">
             <ion-avatar item-left>
                 <img src="img/default.png">
@@ -39,17 +39,22 @@
             <h2>{{member.displayName}}</h2>
             <p *ngIf="member.invisible">anonymous user</p>
             <p *ngIf="!member.invisible">{{member.email}}</p>
-            <button outline item-right
-            [hidden]="member._id==user._id"
+            <button clear round danger item-right 
+            [hidden]="member._id==user._id" large
             (click)="removeMember(member,i)">
-                Remove
+                <ion-icon name='close-circle'></ion-icon>
             </button>
         </ion-item>
 
-        <button secondary round full type="submit">Save</button>
+        <button ptred large round full type="submit" class="bottom-submit">Save</button>
 
 
         </form>
     </ion-list>
 
 </ion-content>
+
+
+<!--<button fab ptred fab-top fab-right style="z-index: 999;top:11em" (click)="promptForName()">
+    <ion-icon name='people' is-active="true"></ion-icon>
+</button>-->

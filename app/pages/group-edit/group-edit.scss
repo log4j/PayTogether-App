@@ -1,7 +1,44 @@
-.has-error {
+
+ion-page.group-edit-modal-page{
+    ion-item {
     
-    ion-label  {
-        color: red;
+        ion-label {
+            color: #bab7ca;
+            
+            h2{
+                color:white;
+            }
+        }
+        
+        ion-input{
+            color: white;
+        }
+        
+        p{
+            color:#bab7ca;
+        }
+        
+        
+    }
+    .input-has-focus ion-label{
+            color: #bab7ca !important;
+        }
+        
+    ion-list-header {
+        color: #bab7ca;
+        border-bottom: none;
     }
     
+    .item-inner{
+        border-color: #746f92;
+    }
+
+    .has-error {
+        
+        ion-label  {
+            color: red;
+        }
+        
+    }
 }
+

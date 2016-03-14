@@ -186,10 +186,11 @@ export class Group implements IGroup{
             this.icon = data.icon;
             this.color = data.color;
             this.creator = new User(data.creator);
-            this.userOwned = data.userOwned;
-            this.userPaid = data.userPaid;
-            this.userReceived = data.userReceived;
-            this.userSpent = data.userSpent;
+            
+            this.userOwned = data.userOwned?data.userOwned:0;
+            this.userPaid = data.userPaid?data.userPaied:0;
+            this.userReceived = data.userReceived?data.userReceived:0;
+            this.userSpent = data.userSpent?data.userSpent:0;
             
             for(let i=0;i<data.users.length;i++){
                 this.users.push(new User(data.users[i]));
@@ -375,6 +376,14 @@ export class Activity {
             this.amount = data.amount;
             this.isPay = data.is_pay;
             this.name = data.name;
+            if(data.create_at){
+                this.date = new Date(data.create_at);
+            }else if(data.date){
+                this.date = new Date(data.date);
+            }else{
+                this.date = new Date();
+            }
+            
             this.sharedByPercentage = data.share_by_percentage;
             this.group = new Group(data.group);
             

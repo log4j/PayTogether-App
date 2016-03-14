@@ -13,7 +13,7 @@ export class GroupListPage {
     selectedItem: any;
     icons: string[];
     items: Array<{ title: string, note: string, icon: string }>;
-    groups: Array<Group>;
+    groups: Array<Group> = [];
     
 
     constructor(private nav: NavController, 
