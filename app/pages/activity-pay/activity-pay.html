@@ -59,16 +59,22 @@
                 </ion-avatar>
                 <h2>{{item.user.displayName}} shared {{item.selected}}</h2>
                 <p>{{item.final | currency:'USD':true:'1.2-2'}}</p>
-                <button dark clear item-right type="button" (click)='promptForSharedValue(item)'>
-                    {{activity.sharedByPercentage?(item.percentage/100 | percent:'.2-2'):(item.amount | currency:'USD':true:'1.2-2')}}
+                <button dark clear item-right type="button" [hidden]="!activity.sharedByPercentage" (click)='promptForSharedValue(item)'>
+                    {{item.percentage/100 | percent:'.2-2'}}
+                </button>
+                <button dark clear item-right type="button" [hidden]="activity.sharedByPercentage" (click)='promptForSharedValue(item)'>
+                    {{item.amount | currency:'USD':true:'1.2-2'}}
                 </button>
                 <!--<ion-toggle item-right [(ngModel)]="item.selected"></ion-toggle>-->
             </ion-item>
 
             <ion-item>
                 Remaining
-                <ion-note item-right>
-                    {{activity.sharedByPercentage?(percentageRemaining/100 | percent:'.2-2'):(amountRemaining | currency:'USD':true:'1.2-2')}}
+                <ion-note item-right [hidden]="!activity.sharedByPercentage">
+                    {{percentageRemaining/100 | percent:'.2-2'}}
+                </ion-note>
+                <ion-note item-right [hidden]="activity.sharedByPercentage">
+                    {{amountRemaining | currency:'USD':true:'1.2-2'}}
                 </ion-note>
             </ion-item>
 
