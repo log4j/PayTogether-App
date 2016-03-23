@@ -113,7 +113,7 @@ export class UserService {
     }
     
     deleteActivity(activity:Activity):Observable<Result>{
-        return this._http.delete('activity/'+activity._id);
+        return this._http.delete('activity/'+activity._id,null);
     }
     
 }
