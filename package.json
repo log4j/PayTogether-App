@@ -10,7 +10,7 @@
     "rxjs": "5.0.0-beta.0",
     "zone.js": "0.5.14",
     "angular2-local-storage": "0.2.0",
-    "ionic-native":"*"
+    "ionic-native": "*"
   },
   "devDependencies": {
     "awesome-typescript-loader": "0.15.10",
@@ -25,7 +25,8 @@
     "cordova-plugin-whitelist",
     "cordova-plugin-splashscreen",
     "cordova-plugin-statusbar",
-    "ionic-plugin-keyboard"
+    "ionic-plugin-keyboard",
+    "cordova-plugin-datepicker"
   ],
   "cordovaPlatforms": [
     "android"

@@ -45,6 +45,12 @@
                 <ion-input type="date" [(ngModel)]="activity.dateStr" item-right  required
                            placeholder="YYYY/MM/DD" ngControl="date" #amount="ngForm" (change)="updateDate()"></ion-input>
             </ion-item>
+            
+            <ion-item>
+                <ion-label>Date</ion-label>
+                <ion-note item-right (click)="selectDate()">{{activity.date | date:'dd/MM/y'}}</ion-note>
+            </ion-item>
+            
 <!--
             <ion-item>
                 <ion-label floating>Amount</ion-label>
@@ -74,7 +80,7 @@
                     {{item.amount | currency:'USD':true:'1.2-2'}}
                 </button>
 
-                <ion-toggle ptgreen [(ngModel)]="item.selected" (change)="updateToFinalValues()"></ion-toggle>
+                <ion-toggle ptgreen [(ngModel)]="item.selected" type="button" (change)="updateToFinalValues()"></ion-toggle>
             </ion-item>
 
             <button fill round  style='float:right;' ptgreen item-right type="button" (click)="setToAverage()">

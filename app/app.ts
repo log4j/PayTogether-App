@@ -74,25 +74,7 @@ class MyApp {
             //LocalStorageSubscriber(this.app);
 
 
-            var options = {
-                date: new Date(),
-                mode: 'date', // or 'time'
-                // minDate: new Date() - 10000,
-                allowOldDates: true,
-                allowFutureDates: false,
-                doneButtonLabel: 'DONE',
-                doneButtonColor: '#F2F3F4',
-                cancelButtonLabel: 'CANCEL',
-                cancelButtonColor: '#000000'
-            };
-            DatePicker.show(options).then(
-                date => {
-                    console.log('Selected date: ' ,date);
-                },
-                error => {
-                    console.log('Error: ' , error);
-                }
-            );
+            
       
         });
     }

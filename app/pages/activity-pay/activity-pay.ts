@@ -4,7 +4,9 @@ import {NgFor, NgClass, PercentPipe, CurrencyPipe, DatePipe} from 'angular2/comm
 // import * as helpers from '../../../directives/helpers';
 import {Group, Activity, Share} from '../../components/GroupInterface';
 import {User} from '../../components/GroupInterface';
-import {UserService} from '../../services/UserService'
+import {UserService} from '../../services/UserService';
+
+import {StatusBar,DatePicker} from 'ionic-native';
 
 @Page({
     templateUrl: './build/pages/activity-pay/activity-pay.html',
@@ -154,7 +156,7 @@ export class ActivityPayModalPage {
     }
 
     submitActivity(form) {
-        
+        console.log('try to submit');
         //do some validate
         if (!form.valid){
             let alert = Alert.create({
@@ -252,5 +254,31 @@ export class ActivityPayModalPage {
         //this.activity.date = new Date(this.activity.date);
     }
     
+    selectDate() {
+        console.log("selectDate");
+        
+        var options = {
+                date: this.activity.date,
+                mode: 'date', // or 'time'
+                // minDate: new Date() - 10000,
+                allowOldDates: true,
+                allowFutureDates: false,
+                doneButtonLabel: 'DONE',
+                doneButtonColor: '#F2F3F4',
+                cancelButtonLabel: 'CANCEL',
+                cancelButtonColor: '#000000'
+            };
+        DatePicker.show(options).then(
+            date => {
+                console.log('Selected date: ' ,date);
+                this.activity.date = date;
+            },
+            error => {
+                console.log('Error: ' , error);
+            }
+        );
+            
+            
+    }
     
 }
