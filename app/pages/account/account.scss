@@ -1,9 +1,12 @@
-ion-page {
-    background-image: url('../../img/bg-1.png');
-    background-size: 100%;
+ion-nav {
+    background-image: url('../../img/bg-1.png')!important;
+    background-size: 100% !important;
+    // background: 
 }
 ion-content {
-    background: transparent;
+    // background: transparent;
+    background-image: url('../../img/bg-1.png');
+    background-size: 100%;
 }
 ion-item {
     background: none !important;
@@ -13,8 +16,13 @@ ion-item {
 ion-list > .item:first-child, ion-list > ion-item-sliding:first-child .item{
     border-top: none;
 }
+.toolbar[dark] .toolbar-background{
+    background: transparent;
+    border-color: #67609C;
+}
 .toolbar-background {
     opacity: 0.1;
+    border-color: #67609C !important;
 }
 
 ion-item.logo ion-label{
