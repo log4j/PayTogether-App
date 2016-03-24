@@ -28,9 +28,9 @@
         </ion-list-header>
 
         
-            <button fill round [hidden]='group._id' style='float:right;' ptgreen item-right type="button" (click)="promptForName()">
-                <ion-icon name='add'></ion-icon>Member
-            </button>
+        <button fill round [hidden]='group._id' style='float:right;' ptgreen item-right type="button" (click)="promptForName()">
+            <ion-icon name='add'></ion-icon>Member
+        </button>
         
         <ion-item *ngFor="#member of group.users, #i = index" [hidden]="group._id">
             <ion-avatar item-left>

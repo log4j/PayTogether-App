@@ -1,4 +1,4 @@
-<ion-toolbar class="android-attr">
+<ion-toolbar dark class="android-attr">
     <ion-title>
         Pay Activity
     </ion-title>
@@ -19,6 +19,7 @@
             <ion-item>
                 <ion-label>For what</ion-label>
                 <ion-input type="text" [(ngModel)]="activity.name" item-right required
+                   placeholder="set a tag"
                     ngControl="name" #name="ngForm"></ion-input>
             </ion-item>
             <ion-item>
@@ -33,11 +34,16 @@
                     <ion-option [value]="user._id" *ngFor="#user of group.users">{{user.displayName}}</ion-option>
                 </ion-select>
             </ion-item>
-            
+
             <ion-item>
                 <ion-label>Amount</ion-label>
                 <ion-input type="number" [(ngModel)]="activity.amount" item-right (change)="updateToFinalValues()" required
-                    ngControl="amount" #amount="ngForm"></ion-input>
+                           placeholder="set a value" ngControl="amount" #amount="ngForm"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label>Date</ion-label>
+                <ion-input type="date" [(ngModel)]="activity.dateStr" item-right  required
+                           placeholder="YYYY/MM/DD" ngControl="date" #amount="ngForm" (change)="updateDate()"></ion-input>
             </ion-item>
 <!--
             <ion-item>
@@ -53,20 +59,27 @@
                 </ion-select>
             </ion-item>
 
-            <ion-item *ngFor="#item of activity.to, #i = index" [hidden]="!item.selected" >
+            <ion-item *ngFor="#item of activity.to, #i = index" >
+
+                <ion-label>{{item.user.displayName}} shared {{item.final | currency:'USD':true:'1.2-2'}}</ion-label>
                 <ion-avatar item-left>
                     <img src="img/default.png">
                 </ion-avatar>
-                <h2>{{item.user.displayName}} shared {{item.selected}}</h2>
-                <p>{{item.final | currency:'USD':true:'1.2-2'}}</p>
-                <button dark clear item-right type="button" [hidden]="!activity.sharedByPercentage" (click)='promptForSharedValue(item)'>
+                <!--<h2>{{item.user.displayName}} shared {{item.selected}}</h2>-->
+                <!--<p>{{item.final | currency:'USD':true:'1.2-2'}}</p>-->
+                <button clear item-right type="button" [hidden]="!activity.sharedByPercentage" (click)='promptForSharedValue(item)'>
                     {{item.percentage/100 | percent:'.2-2'}}
                 </button>
-                <button dark clear item-right type="button" [hidden]="activity.sharedByPercentage" (click)='promptForSharedValue(item)'>
+                <button clear item-right type="button" [hidden]="activity.sharedByPercentage" (click)='promptForSharedValue(item)'>
                     {{item.amount | currency:'USD':true:'1.2-2'}}
                 </button>
-                <!--<ion-toggle item-right [(ngModel)]="item.selected"></ion-toggle>-->
+
+                <ion-toggle ptgreen [(ngModel)]="item.selected" (change)="updateToFinalValues()"></ion-toggle>
             </ion-item>
+
+            <button fill round  style='float:right;' ptgreen item-right type="button" (click)="setToAverage()">
+                <ion-icon name='add'></ion-icon>Set Average
+            </button>
 
             <ion-item>
                 Remaining
@@ -78,7 +91,9 @@
                 </ion-note>
             </ion-item>
 
-            <button secondary round full type="submit">Save</button>
+
+
+            <button ptred large round full class="bottom-submit" type="submit">Save</button>
 
 
         </form>

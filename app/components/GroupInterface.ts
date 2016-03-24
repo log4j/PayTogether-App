@@ -364,7 +364,8 @@ export class Activity {
     to: Share[];
     isPay: boolean;
     name:string;
-    date: Date;   
+    date: Date = new Date();
+    dateStr: string;
     sharedByPercentage: boolean;
     group: Group;
     
@@ -436,5 +437,41 @@ export class Activity {
             obj.to.push(this.to[i].toObject());
         }
         return obj;
+    }
+
+    setAverage() {
+        let totalSelected:number = 0;
+        for(let i=0;i<this.to.length;i++){
+            if(this.to[i].selected)
+                totalSelected ++;
+        }
+        if(totalSelected ==0)
+            return;
+
+        if(this.sharedByPercentage){
+            let average:number = parseInt(10000 / totalSelected + '')/100;
+            let valLeft = 100;
+            let count = 0;
+            for(let i=0;i<this.to.length;i++){
+                if(this.to[i].selected){
+                    count ++ ;
+                    this.to[i].percentage = (count==totalSelected)? valLeft:average;
+                    valLeft = valLeft - average;
+                }
+            }
+        }else{
+            if(this.amount>0){
+                let average:number = parseInt(this.amount*100 / totalSelected + '')/100;
+                let valLeft:number = this.amount;
+                let count = 0;
+                for(let i=0;i<this.to.length;i++){
+                    if(this.to[i].selected){
+                        count ++ ;
+                        this.to[i].amount = parseFloat(((count==totalSelected)? valLeft:average) + '');
+                        valLeft = valLeft - average;
+                    }
+                }
+            }
+        }
     }
 }

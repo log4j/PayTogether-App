@@ -7,6 +7,8 @@ import {JsonHttp} from './utils/JsonHttp';
 import {UserService} from './services/UserService';
 
 
+
+
 import {AccountPage} from './pages/account/account';
 import {WelcomePage} from './pages/welcome/welcome';
 import {ListPage} from './pages/list/list';
@@ -19,7 +21,7 @@ import {BusyComponent, BusyCtrl} from './components/busy-component/busy-componen
 
 import {LocalStorage} from 'angular2-local-storage/local_storage';
 
-import {StatusBar} from 'ionic-native';
+import {StatusBar,DatePicker} from 'ionic-native';
 
 
 @App({
@@ -70,6 +72,27 @@ class MyApp {
             // StatusBar.overlaysWebView(true);
             // StatusBar.hide();
             //LocalStorageSubscriber(this.app);
+
+
+            var options = {
+                date: new Date(),
+                mode: 'date', // or 'time'
+                // minDate: new Date() - 10000,
+                allowOldDates: true,
+                allowFutureDates: false,
+                doneButtonLabel: 'DONE',
+                doneButtonColor: '#F2F3F4',
+                cancelButtonLabel: 'CANCEL',
+                cancelButtonColor: '#000000'
+            };
+            DatePicker.show(options).then(
+                date => {
+                    console.log('Selected date: ' ,date);
+                },
+                error => {
+                    console.log('Error: ' , error);
+                }
+            );
       
         });
     }
