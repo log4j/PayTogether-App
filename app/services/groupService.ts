@@ -1,4 +1,4 @@
-import {Injectable} from 'angular2/core';
+import {Injectable} from '@angular/core';
 import {JsonHttp} from '../utils/JsonHttp';
 import {Observable} from 'rxjs/Observable';
 import {LocalStorage} from 'angular2-local-storage/local_storage';

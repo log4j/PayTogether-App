@@ -1,7 +1,7 @@
 import {App, IonicApp, Platform, Alert} from 'ionic-angular';
-import {Injectable, OnDestroy} from 'angular2/core';
+import {Injectable, OnDestroy} from '@angular/core';
 
-import {NgClass,PercentPipe, CurrencyPipe} from 'angular2/common';
+import {NgClass,PercentPipe, CurrencyPipe} from '@angular/common';
 import {Config} from './services/Config';
 import {JsonHttp} from './utils/JsonHttp';
 import {UserService} from './services/UserService';
@@ -15,11 +15,10 @@ import {ListPage} from './pages/list/list';
 import {GroupListPage} from './pages/group-list/group-list';
 
 // https://angular.io/docs/ts/latest/api/core/Type-interface.html
-import {Type} from 'angular2/core';
+import {Type} from '@angular/core';
 
-import {BusyComponent, BusyCtrl} from './components/busy-component/busy-component';
 
-import {LocalStorage} from 'angular2-local-storage/local_storage';
+//import {LocalStorage} from 'angular2-local-storage/local_storage';
 
 import {StatusBar,DatePicker} from 'ionic-native';
 
@@ -27,8 +26,8 @@ import {StatusBar,DatePicker} from 'ionic-native';
 @App({
     templateUrl: 'build/app.html',
     config: {}, // http://ionicframework.com/docs/v2/api/config/Config/,
-    providers: [Config, JsonHttp, UserService, BusyCtrl, LocalStorage],
-    directives: [BusyComponent,NgClass]
+    providers: [Config, JsonHttp, UserService],
+    directives: [NgClass]
 })
 class MyApp {
     // make HelloIonicPage the root (or first) page

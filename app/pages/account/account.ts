@@ -1,7 +1,5 @@
-import {Component} from 'angular2/core';
 import {Page, Alert, NavController} from 'ionic-angular';
 import {UserService} from '../../services/UserService'
-import {BusyCtrl} from '../../components/busy-component/busy-component';
 import {GroupListPage} from '../group-list/group-list';
 
 
@@ -16,8 +14,7 @@ export class AccountPage {
     _userService: UserService;
     
     constructor( _userService: UserService, 
-    private nav: NavController, 
-    private busyCtrl: BusyCtrl) {
+    private nav: NavController) {
         
         this._userService = _userService;
         this.loginData =
@@ -29,7 +26,6 @@ export class AccountPage {
 
     submitLogin(event) {
 
-        this.busyCtrl.next(true);
 
         this._userService.postLogin(this.loginData.username, this.loginData.password)
             .subscribe(

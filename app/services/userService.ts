@@ -1,7 +1,7 @@
-import {Injectable} from 'angular2/core';
+import {Injectable} from '@angular/core';
 import {JsonHttp} from '../utils/JsonHttp';
 import {Observable} from 'rxjs/Observable';
-import {LocalStorage} from 'angular2-local-storage/local_storage';
+//import {LocalStorage} from 'angular2-local-storage/local_storage';
 
 import {User,Group,Activity} from '../components/GroupInterface'
 import {Result} from '../components/HttpResult'
@@ -13,7 +13,7 @@ export class UserService {
     user: User;
     profile: any;
 
-    constructor(private _http: JsonHttp, private _localStorage: LocalStorage) {
+    constructor(private _http: JsonHttp) {
     }
 
     postLogin(username: string, password: string) {
@@ -45,11 +45,11 @@ export class UserService {
 
     updateProfile(data: any) {
         this.profile = data;
-        this._localStorage.setObject('profile', data);
+        //this._localStorage.setObject('profile', data);
     }
 
     getGroups() : Observable<Array<Group>>{
-        this.profile = this._localStorage.getObject('profile');
+        //this.profile = this._localStorage.getObject('profile');
         return this._http.get('group', { user: this.profile._id })
         .map(res =>{
             let groups:Array<Group> = [];

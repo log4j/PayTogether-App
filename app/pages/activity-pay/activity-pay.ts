@@ -1,6 +1,6 @@
 import {App, Alert, IonicApp, Animation, Modal, Platform, NavController, NavParams, Page, Events, ViewController} from 'ionic-angular';
-import {forwardRef} from 'angular2/core';
-import {NgFor, NgClass, PercentPipe, CurrencyPipe, DatePipe} from 'angular2/common';
+import {forwardRef} from '@angular/core';
+import {NgFor, NgClass, PercentPipe, CurrencyPipe, DatePipe} from '@angular/common';
 // import * as helpers from '../../../directives/helpers';
 import {Group, Activity, Share} from '../../components/GroupInterface';
 import {User} from '../../components/GroupInterface';
@@ -72,7 +72,7 @@ export class ActivityPayModalPage {
             this.activity.dateStr = "1990-12-22";//datePipe.transform(this.activity.date,['yyyy-MM-dd']);
             console.log(this.activity);
             console.log('asdfsdf');
-            console.log(datePipe.transform(this.activity.date,['y-MM-dd']));
+            console.log(datePipe.transform(this.activity.date,'y-MM-dd'));
             this.activity.initialToByUsers(this.group.users);
         }
 
@@ -121,8 +121,8 @@ export class ActivityPayModalPage {
         let prompt = Alert.create({
             title: 'How much this member shared',
             message: (this.activity.sharedByPercentage ?
-                this.percentPipe.transform(this.percentageRemaining / 100, ['.2-2'])
-                : this.currencyPipe.transform(this.amountRemaining + item.amount, ['USD', '2.2-2']))
+                this.percentPipe.transform(this.percentageRemaining / 100, '.2-2')
+                : this.currencyPipe.transform(this.amountRemaining + item.amount, 'USD', true, '2.2-2'))
                 + " remaining",
             inputs: [
                 {
@@ -189,8 +189,8 @@ export class ActivityPayModalPage {
             let alert = Alert.create({
                 title: 'Form invalid',
                 subTitle: 'Remaining is not zero. Remaining:'+(this.activity.sharedByPercentage ?
-                this.percentPipe.transform(this.percentageRemaining / 100, ['.2-2'])
-                : this.currencyPipe.transform(this.amountRemaining, ['USD', '2.2-2'])),
+                this.percentPipe.transform(this.percentageRemaining / 100, '.2-2')
+                : this.currencyPipe.transform(this.amountRemaining, 'USD', true, '2.2-2')),
                 buttons: ['OK']
             });
             this.nav.present(alert);

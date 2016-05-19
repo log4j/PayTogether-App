@@ -1,6 +1,6 @@
 import {Platform, Page, Alert, Modal, NavController, NavParams, ActionSheet} from 'ionic-angular';
 import {UserService} from '../../services/UserService'
-import {NgFor, NgClass, PercentPipe, CurrencyPipe} from 'angular2/common';
+import {NgFor, NgClass, PercentPipe, CurrencyPipe} from '@angular/common';
 import {GroupEditModalPage} from '../group-edit/group-edit'
 import {ActivityPayModalPage} from '../activity-pay/activity-pay'
 import {ActivityTransferModalPage} from '../activity-transfer/activity-transfer'
@@ -128,7 +128,7 @@ export class GroupDetailPage {
 
 
     presentActionSheetOnActivity(event, activity:Activity) {
-        let title = activity.from.displayName + ' paid ' + this.currencyPipe.transform(activity.amount, ['USD', '.2-2']) + ' for ' + activity.name;
+        let title = activity.from.displayName + ' paid ' + this.currencyPipe.transform(activity.amount, 'USD', true, '.2-2') + ' for ' + activity.name;
         if (this.platform.is('android')) {
             var androidSheet = {
                 title: title,
@@ -235,6 +235,6 @@ export class GroupDetailPage {
     }
     
     currency(value){
-        return this.currencyPipe.transform(parseFloat(value),['USD','.2-2']);
+        return this.currencyPipe.transform(parseFloat(value),'USD',true,'.2-2');
     }
 }

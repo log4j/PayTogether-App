@@ -1,6 +1,6 @@
 import {App, Alert, IonicApp, Animation, Modal, Platform, NavController, NavParams, Page, Events, ViewController} from 'ionic-angular';
-import {forwardRef} from 'angular2/core';
-import {NgFor, NgClass, PercentPipe, CurrencyPipe} from 'angular2/common';
+import {forwardRef} from '@angular/core';
+import {NgFor, NgClass, PercentPipe, CurrencyPipe} from '@angular/common';
 // import * as helpers from '../../../directives/helpers';
 import {Group, Activity, Share} from '../../components/GroupInterface';
 import {User} from '../../components/GroupInterface';
@@ -125,8 +125,8 @@ export class ActivityTransferModalPage {
         let prompt = Alert.create({
             title: 'How much this member shared',
             message: (this.activity.sharedByPercentage ?
-                this.percentPipe.transform(this.percentageRemaining / 100, ['.2-2'])
-                : this.currencyPipe.transform(this.amountRemaining + item.amount, ['USD', '2.2-2']))
+                this.percentPipe.transform(this.percentageRemaining / 100, '.2-2')
+                : this.currencyPipe.transform(this.amountRemaining + item.amount, 'USD', true, '2.2-2'))
                 + " remaining",
             inputs: [
                 {
